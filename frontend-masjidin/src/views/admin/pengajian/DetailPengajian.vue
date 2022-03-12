@@ -22,33 +22,32 @@
                         <div class="container">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Detail Berita</h1>
+    <h1 class="h3 mb-4 text-gray-800">Detail Pengajian</h1>
 
     <div class="row">
         <div class="col">
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4 p-3">
-                        <img    :src="path + '/pengumuman/' + pengumuman.foto " class="card-img" alt="foto">
+                        <img    :src="path + '/pengajian/' + pengajian.foto " class="card-img" alt="foto">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    Judul: {{ pengumuman.judul}}
+                                    Judul: {{ pengajian.judul}}
                                 </li>
                                 <li class="list-group-item">
-                                 <a v-html="pengumuman.isi"></a>
+                                 <a v-html="pengajian.deskripsi"></a>
                                 </li>
                                 <li class="list-group-item">
-                                    Dibuat : {{pengumuman.tanggal}}
+                                    Dibuat : {{pengajian.tanggal}}
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="/pengumuman">&laquo; Kembali</a>
+                                    <a href="/pengajian">&laquo; Kembali</a>
                                 </li>
                                 <li class="list-group-item">
-                                   <!-- <router-link :to="{name: 'pengumumanedit', params: {id:coba.id }}" class="btn btn-warning"><button>Edit</button></router-link> -->
-
+                               
                                     <form action="" method="post" class="d-inline">
                                       
                                         <input type="hidden" name="_method" value="DELETE">
@@ -91,10 +90,10 @@
 </template>
 
 <script>
-import Head from '../../components/admin/HeadAdmin.vue'
-import Sidebar from '../../components/admin/SidebarAdmin.vue'
-import Footer from '../../components/admin/FooterAdmin.vue'
-import Header from '../../components/admin/HeaderAdmin.vue'
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 import { reactive,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
@@ -105,7 +104,6 @@ export default {
         Sidebar,
         Footer,
         Header,
-        
 
     },
     data() {
@@ -118,10 +116,10 @@ export default {
     setup() {
     const token = localStorage.getItem("token");
     //state user dinas
-    const pengumuman = reactive({
+    const pengajian= reactive({
       judul: "",
       foto: "",
-      isi: "",
+      deskripsi: "",
       tanggal: "",
     });
 
@@ -140,12 +138,12 @@ export default {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       //get API from backend
       axios
-        .get(`http://localhost:8000/api/admin/pengumuman/${route.params.id}`)
+        .get(`http://localhost:8000/api/admin/pengajian/${route.params.id}`)
         .then((response) => {
-          pengumuman.judul = response.data.data.judul;
-          pengumuman.isi = response.data.data.isi;
-          pengumuman.foto = response.data.data.foto;
-          pengumuman.tanggal = response.data.data.tanggal;
+          pengajian.judul = response.data.data.judul;
+          pengajian.deskripsi = response.data.data.deskripsi;
+          pengajian.foto = response.data.data.foto;
+          pengajian.tanggal = response.data.data.tanggal;
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -153,7 +151,7 @@ export default {
     });
 
     return {
-      pengumuman,
+      pengajian,
       router,
     };
   },

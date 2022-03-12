@@ -15,5 +15,6 @@ class Pengajian extends Model
         'judul',
         'foto',
         'deskripsi',
+        'tanggal',
     ];
 }

@@ -32,19 +32,9 @@ Route::post('user/login', [AuthController::class, 'adminLogin'])->name('adminLog
 
 
 
-//jadwal sholat
-Route::post('/sholat', [JadwalSholatController::class, 'store']);
-Route::post('/sholat/{id}', [JadwalSholatController::class, 'update']);
-Route::get('/sholat', [JadwalSholatController::class, 'index']);
-Route::get('/sholat/{id}', [JadwalSholatController::class, 'show']);
-Route::delete('/sholat/{id}', [JadwalSholatController::class, 'destroy']);
 
-//pengajian
-Route::post('/pengajian', [PengajianController::class, 'store']);
-Route::post('/pengajian/{id}', [PengajianController::class, 'update']);
-Route::get('/pengajian', [PengajianController::class, 'index']);
-Route::get('/pengajian/{id}', [PengajianController::class, 'show']);
-Route::delete('/pengajian/{id}', [PengajianController::class, 'destroy']);
+
+
 
 Route::middleware('auth:admin-api')->get('currentAdmin', [AuthController::class, 'currentAdmin']);
 
@@ -56,4 +46,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:ad
    Route::get('/pengumuman', [AdminPengumumanController::class, 'index']);
    Route::get('/pengumuman/{id}', [AdminPengumumanController::class, 'show']);
    Route::delete('/pengumuman/{id}', [AdminPengumumanController::class, 'destroy']);
+
+
+   //pengajian
+   Route::post('/pengajian', [PengajianController::class, 'store']);
+   Route::post('/pengajian/{id}', [PengajianController::class, 'update']);
+   Route::get('/pengajian', [PengajianController::class, 'index']);
+   Route::get('/pengajian/{id}', [PengajianController::class, 'show']);
+   Route::delete('/pengajian/{id}', [PengajianController::class, 'destroy']);
+
+
+   //jadwal sholat
+   Route::post('/sholat', [JadwalSholatController::class, 'store']);
+   Route::post('/sholat/{id}', [JadwalSholatController::class, 'update']);
+   Route::get('/sholat', [JadwalSholatController::class, 'index']);
+   Route::get('/sholat/{id}', [JadwalSholatController::class, 'show']);
+   Route::delete('/sholat/{id}', [JadwalSholatController::class, 'destroy']);
 });

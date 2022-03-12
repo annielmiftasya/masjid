@@ -22,14 +22,14 @@
                                     <h6
                                         class="m-0 font-weight-bold text-primary"
                                     >
-                                        Data Pengumuman
+                                        Data Pengajian
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-2 mr-0">
                                             <a
-                                                href="/pengumuman/tambah"
+                                                href="/pengajian/tambah"
                                                 class="btn btn-success mb-3"
                                                 >Tambah Data</a
                                             >
@@ -68,7 +68,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Judul</th>
+                                                    <th width="500px">Judul</th>
                                                     <th>Tanggal</th>
                                                     <th>Aksi</th>
                                                 </tr>
@@ -76,35 +76,35 @@
 
                                             <tbody
                                                 v-for="(
-                                                    pengumuman, index
-                                                ) in pengumuman"
-                                                :key="pengumuman.id"
+                                                    pengajian, index
+                                                ) in pengajian"
+                                                :key="pengajian.id"
                                             >
                                                 <tr>
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
-                                                        {{ pengumuman.judul }}
+                                                        {{pengajian.judul }}
                                                     </td>
                                                     <td>
-                                                        {{ pengumuman.tanggal }}
+                                                        {{pengajian.tanggal }}
                                                     </td>
                     
                                                     <td
                                                         class="px-10 py-2 text-center"
                                                     >
-                                                        <router-link :to="{name: 'pengumuman/detail', params: {id: pengumuman.id }}" class="btn btn-info btn-circle btn-sm">
+                                                        <router-link :to="{name: 'pengajian/detail', params: {id: pengajian.id }}" class="btn btn-info btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-info-circle"
                                                             ></i>
                                                         </router-link>
-                                                         <router-link :to="{name: 'pengumuman/edit', params: {id: pengumuman.id }}" class="btn btn-warning btn-circle btn-sm">
+                                                         <router-link :to="{name: 'pengajian/edit', params: {id: pengajian.id }}" class="btn btn-warning btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-edit"
                                                             ></i>
                                                           
                                                         </router-link>
                                                         <a
-                                                           @click.prevent="Delete(pengumuman.id)" 
+                                                           @click.prevent="Delete(pengajian.id)" 
                                                             class="btn btn-danger btn-circle btn-sm"
                                                         >
                                                             <i
@@ -137,10 +137,10 @@
     </div>
 </template>
 <script>
-import Head from "../../components/admin/HeadAdmin.vue";
-import Sidebar from "../../components/admin/SidebarAdmin.vue";
-import Footer from "../../components/admin/FooterAdmin.vue";
-import Header from "../../components/admin/HeaderAdmin.vue";
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
 import { onMounted, ref } from "@vue/runtime-core";
 
@@ -154,7 +154,7 @@ export default {
     },
         setup() {
         //state user
-        const pengumuman = ref("");
+        const pengajian = ref("");
 
         //state token
         const token = localStorage.getItem('token')
@@ -166,9 +166,9 @@ export default {
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           //get API from laravel backend
           axios
-            .get("http://localhost:8000/api/admin/pengumuman")
+            .get("http://localhost:8000/api/admin/pengajian")
             .then((response) => {
-              pengumuman.value = response.data.data;
+              pengajian.value = response.data.data;
             })
             .catch((error) => {
               console.log(error.response.data);
@@ -176,9 +176,9 @@ export default {
         });
 
         function Delete(id, index) {
-          axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
-            this.pengumuman.splice(index, 1);
-            alert('delete data?')
+          axios.delete(`http://localhost:8000/api/admin/pengajian/${id}`).then(() => {
+         this.pengajian.splice(index, 1);
+            alert('Apakah anda yakin ingin menghapus data ini?')
           }).catch(error => {
             console.log(error.response.data)
           })
@@ -187,7 +187,7 @@ export default {
         //return
         return {
           token,
-          pengumuman,
+          pengajian,
           Delete,
 
         };

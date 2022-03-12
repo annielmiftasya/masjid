@@ -22,14 +22,14 @@
                                     <h6
                                         class="m-0 font-weight-bold text-primary"
                                     >
-                                        Data Pengumuman
+                                        Data Jadwal Sholat
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-2 mr-0">
                                             <a
-                                                href="/pengumuman/tambah"
+                                                href="/sholat/tambah"
                                                 class="btn btn-success mb-3"
                                                 >Tambah Data</a
                                             >
@@ -68,43 +68,67 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Judul</th>
                                                     <th>Tanggal</th>
+                                                    <th>Imsyak</th>
+                                                    <th>Shubuh</th>
+                                                    <th>Terbit</th>
+                                                    <th>Dhuha</th>
+                                                    <th>Dzuhur</th>
+                                                    <th>Ashar</th>
+                                                    <th>Magrib</th>
+                                                    <th>Isya</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody
                                                 v-for="(
-                                                    pengumuman, index
-                                                ) in pengumuman"
-                                                :key="pengumuman.id"
+                                                    sholat, index
+                                                ) in sholat"
+                                                :key="sholat.id"
                                             >
                                                 <tr>
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
-                                                        {{ pengumuman.judul }}
+                                                        {{sholat.tanggal }}
                                                     </td>
                                                     <td>
-                                                        {{ pengumuman.tanggal }}
+                                                        {{sholat.imsyak }}
                                                     </td>
-                    
+                                                    <td>
+                                                        {{sholat.shubuh }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.terbit }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.dhuha }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.dzuhur }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.ashr }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.magrib }}
+                                                    </td>
+                                                    <td>
+                                                        {{sholat.isya }}
+                                                    </td>
+
                                                     <td
                                                         class="px-10 py-2 text-center"
                                                     >
-                                                        <router-link :to="{name: 'pengumuman/detail', params: {id: pengumuman.id }}" class="btn btn-info btn-circle btn-sm">
-                                                            <i
-                                                                class="fas fa-info-circle"
-                                                            ></i>
-                                                        </router-link>
-                                                         <router-link :to="{name: 'pengumuman/edit', params: {id: pengumuman.id }}" class="btn btn-warning btn-circle btn-sm">
+                                                       
+                                                         <router-link :to="{name: 'sholat/edit', params: {id: sholat.id }}" class="btn btn-warning btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-edit"
                                                             ></i>
                                                           
                                                         </router-link>
                                                         <a
-                                                           @click.prevent="Delete(pengumuman.id)" 
+                                                           @click.prevent="Delete(sholat.id)" 
                                                             class="btn btn-danger btn-circle btn-sm"
                                                         >
                                                             <i
@@ -137,10 +161,10 @@
     </div>
 </template>
 <script>
-import Head from "../../components/admin/HeadAdmin.vue";
-import Sidebar from "../../components/admin/SidebarAdmin.vue";
-import Footer from "../../components/admin/FooterAdmin.vue";
-import Header from "../../components/admin/HeaderAdmin.vue";
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
 import { onMounted, ref } from "@vue/runtime-core";
 
@@ -154,7 +178,7 @@ export default {
     },
         setup() {
         //state user
-        const pengumuman = ref("");
+        const sholat = ref("");
 
         //state token
         const token = localStorage.getItem('token')
@@ -166,9 +190,9 @@ export default {
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           //get API from laravel backend
           axios
-            .get("http://localhost:8000/api/admin/pengumuman")
+            .get("http://localhost:8000/api/admin/sholat")
             .then((response) => {
-              pengumuman.value = response.data.data;
+              sholat.value = response.data.data;
             })
             .catch((error) => {
               console.log(error.response.data);
@@ -176,9 +200,9 @@ export default {
         });
 
         function Delete(id, index) {
-          axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
-            this.pengumuman.splice(index, 1);
-            alert('delete data?')
+          axios.delete(`http://localhost:8000/api/admin/sholat/${id}`).then(() => {
+         this.sholat.splice(index, 1);
+            alert('Apakah anda yakin ingin menghapus data ini?')
           }).catch(error => {
             console.log(error.response.data)
           })
@@ -187,7 +211,7 @@ export default {
         //return
         return {
           token,
-          pengumuman,
+          sholat,
           Delete,
 
         };

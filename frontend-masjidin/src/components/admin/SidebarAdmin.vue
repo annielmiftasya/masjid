@@ -41,8 +41,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Jadwal Sholat</a>
-                        <a class="collapse-item" href="cards.html">Pengajian</a>
+                        <a class="collapse-item" href="/sholat">Jadwal Sholat</a>
+                        <a class="collapse-item" href="/pengajian">Pengajian</a>
                         <a class="collapse-item" href="/pengumuman">Pengumuman</a>
                     </div>
                 </div>

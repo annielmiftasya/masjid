@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Pengajian;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
-class AdminPengumumanController extends Controller
+class PengajianController extends Controller
 {
     //
     protected $status = null;
@@ -52,9 +53,11 @@ class AdminPengumumanController extends Controller
                 ]
             );
         }
+        $date = Carbon::now()->toDateString();
         $document = new Pengajian();
         $document->judul = $request->judul;
         $document->deskripsi = $request->deskripsi;
+        $document->tanggal = $date;
         if ($request->foto && $request->foto->isValid()) {
             $file_name = $request->foto->getClientOriginalName();
             $request->foto->move(public_path('Pengajian'), $file_name);
@@ -115,9 +118,11 @@ class AdminPengumumanController extends Controller
                 'data' => []
             ]);
         }
+        $date = Carbon::now()->toDateString();
         $pengajian = Pengajian::find($id);
         $pengajian->judul = $request->judul;
         $pengajian->deskripsi = $request->deskripsi;
+        $pengajian->tanggal = $date;
         if ($request->foto && $request->foto->isValid()) {
             $file_name = $request->foto->getClientOriginalName();
             $request->foto->move(public_path('Pengajian'), $file_name);

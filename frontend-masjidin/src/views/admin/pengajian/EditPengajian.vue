@@ -22,7 +22,7 @@
                          <div class="row">
                            <div class="col-lg">
                                
-                                 <h2 class="my-3">Form Edit Data Pengumuman</h2>
+                                 <h2 class="my-3">Form Edit Data Pengajian</h2>
                                  <form  @submit.prevent="update" method="post" enctype="multipart/form-data">
                                     <div class="form-group row">
                                        <label for="judul" class="col-sm-2 col-form-label">Judul</label>
@@ -32,10 +32,10 @@
                                        </div>
                                     </div>
                                     <div class="form-group row">
-                                    <label for="isi" class="col-sm-2 col-form-label">Isi</label>
+                                    <label for="deskripsi" class="col-sm-2 col-form-label">Deskripsi</label>
                                     <div class="col-sm-10">
 
-                                         <strong> <editor v-model="form.isi" initial-value="TinyMCE has landed!"></editor></strong>
+                                         <strong> <editor v-model="form.deskripsi" initial-value="TinyMCE has landed!"></editor></strong>
                                           
                     
                                     </div>
@@ -85,10 +85,10 @@
 </template>
 <script>
 import Editor from '@tinymce/tinymce-vue';
-import Head from "../../components/admin/HeadAdmin.vue";
-import Sidebar from "../../components/admin/SidebarAdmin.vue";
-import Footer from "../../components/admin/FooterAdmin.vue";
-import Header from "../../components/admin/HeaderAdmin.vue";
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 // import { reactive, ref, onMounted } from "vue";
 // import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
@@ -109,7 +109,7 @@ data() {
         // ref
             form: ({
                 judul: '',
-                isi: '',
+               deskripsi: '',
                 foto: ''
             })
         }
@@ -125,17 +125,9 @@ data() {
         reader.readAsDataURL(file);        
         },
         //For getting Instant Uploaded foto
-        // getPhoto(){
-        // let photo = (this.form.foto.length > 100) ? this.form.foto : "pengumuman/"+ this.form.foto;
-        // return photo;
-        // },
-
-        getPhoto() {
-            let photo =
-                this.form.foto.length > 0
-                    ? this.user.data.photo_responses[0]["path"].split("/").pop()
-                    : null;
-            return photo;
+        getPhoto(){
+        let photo = (this.form.foto.length > 100) ? this.form.foto : "pengajian/"+ this.form.foto;
+        return photo;
         },
         //Insert Photo
         update(){
@@ -143,14 +135,14 @@ data() {
         let formData = new FormData();
 
         formData.append('judul', this.form.judul);
-        formData.append('isi', this.form.isi);
+        formData.append('deskripsi', this.form.deskripsi);
         formData.append('foto', this.form.file);
         
 
         const token = localStorage.getItem('token')
         axios.defaults.headers.common.Authorization = `Bearer ${token}`
 
-        axios.post(`http://localhost:8000/api/admin/pengumuman/${this.$route.params.id}`, 
+        axios.post(`http://localhost:8000/api/admin/pengajian/${this.$route.params.id}`, 
             // Code Baru
             formData, {
             headers: {
@@ -162,13 +154,13 @@ data() {
                 console.log(response.data)
                  console.log(response.data.status)
                  if (response.data.status === 'success') {
-                 this.$router.push({name: 'pengumuman'});  
-                 alert('Data Pengumuman Berhasil Disimpan!');
+                 this.$router.push({name: 'pengajian'});  
+                 alert('Data Pengajian Berhasil Disimpan!');
                  } 
                  
                  else {
                         console.error('fail')
-                          alert('Data Pengumuman Gagal Disimpan!');
+                          alert('Data Pengajian Gagal Disimpan!');
                  }
             })
         },
@@ -185,10 +177,10 @@ data() {
           const token = localStorage.getItem('token')
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
   
-          axios.get(`http://localhost:8000/api/admin/pengumuman/${this.$route.params.id}`)
+          axios.get(`http://localhost:8000/api/admin/pengajian/${this.$route.params.id}`)
           .then(response => { 
               this.form.judul = response.data.data.judul;
-              this.form.isi = response.data.data.isi;
+              this.form.deskripsi= response.data.data.deskripsi;
               this.form.foto = response.data.data.foto;
           })
           .catch(error => {
@@ -209,7 +201,7 @@ data() {
   //   const pengumuman= reactive({
   //     judul: "",
   //     foto: "",
-  //     isi: "",
+  //    deksripsi: "",
   //     tanggal: "",
   //   });
 
@@ -240,7 +232,7 @@ data() {
   //       .get(`http://localhost:8000/api/admin/pengumuman/${route.params.id}`)
   //       .then((response) => {
   //         pengumuman.judul = response.data.data.judul;
-  //         pengumuman.isi = response.data.data.isi;
+  //         pengumuman.deskripsi= response.data.data.isi;
   //         pengumuman.foto = response.data.data.foto;
   //         pengumuman.tanggal = response.data.data.tanggal;
   //       })
