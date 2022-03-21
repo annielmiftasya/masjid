@@ -1,14 +1,14 @@
 //import global API
 import Api from "../../api/Api";
 
-const donation = {
+const infaq = {
     //set namespace true
     namespaced: true,
 
     //state
     state: {
         //donations
-        donations: [],
+        infaqs: [],
 
         //loadmore
         nextExists: false,
@@ -17,9 +17,9 @@ const donation = {
 
     //mutations
     mutations: {
-        //set state donations dengan data dari response
-        SET_DONATIONS(state, donations) {
-            state.donations = donations;
+        //set state infaqs dengan data dari response
+        SET_DONATIONS(state, infaqs) {
+            state.infaqs = infaqs;
         },
 
         //set state nextExists
@@ -35,7 +35,7 @@ const donation = {
         //set state campaigns dengan data dari response loadmore
         SET_LOADMORE(state, data) {
             data.forEach((row) => {
-                state.donations.push(row);
+                state.infaqs.push(row);
             });
         },
     },
@@ -51,7 +51,7 @@ const donation = {
             Api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
             //get data donations ke server
-            Api.get("/donation")
+            Api.get("/user/infaq")
                 .then((response) => {
                     //commit ke mutation SET_DONATIONS dengan response data
                     commit("SET_DONATIONS", response.data.data.data);
@@ -87,8 +87,8 @@ const donation = {
             //set axios header dengan type Authorization + Bearer token
             Api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-            //get data donations dengan parameter page ke server
-            Api.get(`/donation?page=${nextPage}`)
+            //get data infaqs dengan parameter page ke server
+            Api.get(`/user/infaq?page=${nextPage}`)
                 .then((response) => {
                     //commit ke mutation SET_LOADMORE dengan response data
                     commit("SET_LOADMORE", response.data.data.data);
@@ -131,7 +131,7 @@ const donation = {
                 ] = `Bearer ${token}`;
 
                 //send data donatiion ke server
-                Api.post("/donation", data)
+                Api.post("/user/infaq", data)
                     .then((response) => {
                         commit("");
                         resolve(response);
@@ -148,4 +148,4 @@ const donation = {
     getters: {},
 };
 
-export default donation;
+export default infaq;

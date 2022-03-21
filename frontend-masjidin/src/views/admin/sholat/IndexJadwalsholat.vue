@@ -167,6 +167,7 @@ import Footer from "../../../components/admin/FooterAdmin.vue";
 import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
 import { onMounted, ref } from "@vue/runtime-core";
+import { useRouter} from "vue-router";
 
 
 export default {
@@ -177,15 +178,25 @@ export default {
         Header,
     },
         setup() {
-        //state user
-        const sholat = ref("");
+               //state token
+            const token = localStorage.getItem('token')
 
-        //state token
-        const token = localStorage.getItem('token')
+            //inisialisasi vue router on Composition API
+            const router = useRouter()
+
+            //state user
+            const sholat = ref("");
+
 
         
         //mounted
         onMounted(() => {
+          //check Token exist
+                if(!token) {
+                    return router.push({
+                        name: 'login'
+                    })
+                }
 
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           //get API from laravel backend

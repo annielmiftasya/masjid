@@ -85,10 +85,10 @@
 </template>
 <script>
 import Editor from '@tinymce/tinymce-vue';
-import Head from "../../components/admin/HeadAdmin.vue";
-import Sidebar from "../../components/admin/SidebarAdmin.vue";
-import Footer from "../../components/admin/FooterAdmin.vue";
-import Header from "../../components/admin/HeaderAdmin.vue";
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 // import { reactive, ref, onMounted } from "vue";
 // import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
@@ -104,7 +104,7 @@ export default {
 
     },
 
-data() {
+    data() {
         return {
         // ref
             form: ({

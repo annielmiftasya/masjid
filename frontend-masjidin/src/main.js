@@ -10,7 +10,7 @@ import "vue-toastification/dist/index.css";
 /**
  * Tailwind CSS
  */
-import "./index.css";
+import "../index.css";
 
 /**
  * Mixins

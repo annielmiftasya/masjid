@@ -42,4 +42,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function infaqs()
+    {
+        return $this->hasMany(Infaq::class);
+    }
+    public function getAvatarAttribute($avatar)
+    {
+        if ($avatar != null) :
+            return asset('storage/users/' . $avatar);
+        else :
+            return 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
+        endif;
+    }
 }

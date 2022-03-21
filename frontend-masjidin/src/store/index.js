@@ -5,7 +5,7 @@ import { createStore } from "vuex";
 import auth from "./module/auth";
 
 //import module donation
-import donation from "./module/donation";
+import infaq from "./module/infaq";
 
 //import module profile
 import profile from "./module/profile";
@@ -23,10 +23,10 @@ import campaign from "./module/campaign";
 export default createStore({
     modules: {
         auth, // <-- module auth
-        donation, // <-- module donation
+        infaq, // <-- module donation
         profile, // <-- module profile
         slider, // <-- module slider
         category, // <-- module category
         campaign, // <-- module campaign
     },
-});
+}); 

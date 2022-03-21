@@ -161,4 +161,20 @@ class JadwalSholatController extends Controller
             ]
         );
     }
+    public function filter(Request $request)
+    {
+        $this->validate($request, [
+            'tanggal'  => 'required',
+        ]);
+
+        $tanggal  = $request->tanggal;
+
+        //get data donation by range date
+        $jadwal = JadwalSholat::where('status', 'success')
+            ->whereDate('tanggal', '>=', $request->tanggal)
+            ->get();
+
+
+        return view('admin.donation.index', compact('jadwal', 'total'));
+    }
 }

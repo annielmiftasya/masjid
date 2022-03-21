@@ -6,6 +6,11 @@ use App\Http\Controllers\API\AdminPengumumanController;
 use App\Http\Controllers\API\JadwalSholatController;
 use App\Http\Controllers\API\PengajianController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\InfaqController;
+use App\Http\Controllers\API\ProfileController;
+use App\Http\Controllers\API\LaporanKeuanganController;
+use App\Http\Controllers\API\UangKeluarController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +34,9 @@ Route::post('user/register', [AuthController::class, 'registerUser']);
 Route::post('user/login', [AuthController::class, 'adminLogin'])->name('adminLogin');
 
 
-
+// Route::get('/infaq', [InfaqController::class, 'index'])->middleware('auth:user-api');
+// Route::post('/infaq', [InfaqController::class, 'store'])->middleware('auth:user-api');
+// Route::post('/infaq/notification', [InfaqController::class, 'notificationHandler']);
 
 
 
@@ -39,6 +46,20 @@ Route::post('user/login', [AuthController::class, 'adminLogin'])->name('adminLog
 Route::middleware('auth:admin-api')->get('currentAdmin', [AuthController::class, 'currentAdmin']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:admin']], function () {
+
+   //Laporan Uang masuk
+   Route::post('/uangmasuk', [LaporanKeuanganController::class, 'UangMasuk']);
+
+
+   //laporan uang keluar
+   Route::post('/uang_keluar', [UangkeluarController::class, 'store']);
+   Route::post('/uang_keluar/{id}', [UangkeluarController::class, 'update']);
+   Route::get('/uang_keluar/detail/{id}', [UangkeluarController::class, 'showdata']);
+   Route::get('/uang_keluar', [UangKeluarController::class, 'index']);
+   Route::post('/uang_keluar/filter', [UangKeluarController::class, 'show']);
+   Route::delete('/uang_keluar/{id}', [UangKeluarController::class, 'destroy']);
+   Route::get('/uang_keluar/jumlah', [UangkeluarController::class, 'SumUangKeluar']);
+
 
    //pengumuman
    Route::post('/pengumuman', [AdminPengumumanController::class, 'store']);
@@ -62,4 +83,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:ad
    Route::get('/sholat', [JadwalSholatController::class, 'index']);
    Route::get('/sholat/{id}', [JadwalSholatController::class, 'show']);
    Route::delete('/sholat/{id}', [JadwalSholatController::class, 'destroy']);
+});
+
+
+Route::group(['prefix' => 'user', 'middleware' => ['auth:user-api']], function () {
+   //infaq
+   Route::get('/infaq', [InfaqController::class, 'index']);
+   Route::post('/infaq', [InfaqController::class, 'store']);
+   Route::post('/infaq/notification', [InfaqController::class, 'notificationHandler']);
+
+   //profile
+   Route::get('/profile', [ProfileController::class, 'index']);
+   Route::post('/profile', [ProfileController::class, 'update']);
+   Route::post('/profile/password', [ProfileController::class, 'updatePassword']);
 });

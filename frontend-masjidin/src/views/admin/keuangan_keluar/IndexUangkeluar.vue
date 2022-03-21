@@ -22,14 +22,14 @@
                                     <h6
                                         class="m-0 font-weight-bold text-primary"
                                     >
-                                        Data Pengumuman
+                                        Data Keuangan Keluar
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-2 mr-0">
                                             <a
-                                                href="/pengumuman/tambah"
+                                                href="/uangkeluar/tambah"
                                                 class="btn btn-success mb-3"
                                                 >Tambah Data</a
                                             >
@@ -68,43 +68,48 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th>Judul</th>
                                                     <th>Tanggal</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Nominal</th>
                                                     <th>Aksi</th>
                                                 </tr>
+                                                
                                             </thead>
-
+                                       
                                             <tbody
                                                 v-for="(
-                                                    pengumuman, index
-                                                ) in pengumuman"
-                                                :key="pengumuman.id"
+                                                    uang_keluar, index
+                                                ) in uang_keluar"
+                                                :key="uang_keluar.id"
                                             >
                                                 <tr>
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
-                                                        {{ pengumuman.judul }}
+                                                        {{ uang_keluar.date }}
                                                     </td>
                                                     <td>
-                                                        {{ pengumuman.tanggal }}
+                                                        {{ uang_keluar.keterangan }}
+                                                    </td>
+                                                        <td>
+                                                        Rp. {{ uang_keluar.nominal }}
                                                     </td>
                     
                                                     <td
                                                         class="px-10 py-2 text-center"
                                                     >
-                                                        <router-link :to="{name: 'pengumuman/detail', params: {id: pengumuman.id }}" class="btn btn-info btn-circle btn-sm">
+                                                        <router-link :to="{name: 'uangkeluar/detail', params: {id: uang_keluar.id }}" class="btn btn-info btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-info-circle"
                                                             ></i>
                                                         </router-link>
-                                                         <router-link :to="{name: 'pengumuman/edit', params: {id: pengumuman.id }}" class="btn btn-warning btn-circle btn-sm">
+                                                         <router-link :to="{name: 'uangkeluar/edit', params: {id: uang_keluar.id }}" class="btn btn-warning btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-edit"
                                                             ></i>
                                                           
                                                         </router-link>
                                                         <a
-                                                           @click.prevent="Delete(pengumuman.id)" 
+                                                           @click.prevent="Delete(uang_keluar.id)" 
                                                             class="btn btn-danger btn-circle btn-sm"
                                                         >
                                                             <i
@@ -113,8 +118,19 @@
                                                         </a>
                                                     </td>
                                                 </tr>
+                                               
+                                                
                                             </tbody>
+                                                  
                                         </table>
+                                        <table class="table table-bordered">
+                                                <tr class="d-flex justify-content-end ">
+                                                    
+                                                    <th style="width:290px">Total Pengeluaran</th>
+                                                    <th style="width:370px">Rp. {{total.data}}</th>
+                                                </tr>
+                                        </table>
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -137,13 +153,13 @@
     </div>
 </template>
 <script>
-import Head from "../../components/admin/HeadAdmin.vue";
-import Sidebar from "../../components/admin/SidebarAdmin.vue";
-import Footer from "../../components/admin/FooterAdmin.vue";
-import Header from "../../components/admin/HeaderAdmin.vue";
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
-import { onMounted, ref } from "@vue/runtime-core";
-
+import { onMounted, ref} from "@vue/runtime-core";
+import { useRouter} from "vue-router";
 
 export default {
     components: {
@@ -153,31 +169,55 @@ export default {
         Header,
     },
         setup() {
-        //state user
-        const pengumuman = ref("");
+             //state token
+            const token = localStorage.getItem('token')
 
-        //state token
-        const token = localStorage.getItem('token')
+            //inisialisasi vue router on Composition API
+            const router = useRouter()
+
+        //state user
+        const uang_keluar = ref("");
+
+         //state user
+        const total = ref("");
+
 
         
         //mounted
         onMounted(() => {
-
+            //check Token exist
+                if(!token) {
+                    return router.push({
+                        name: 'login'
+                    })
+                }
+        
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           //get API from laravel backend
           axios
-            .get("http://localhost:8000/api/admin/pengumuman")
+            .get("http://localhost:8000/api/admin/uang_keluar")
             .then((response) => {
-              pengumuman.value = response.data.data;
+              uang_keluar.value = response.data.data;
             })
             .catch((error) => {
               console.log(error.response.data);
+              this.$router.push({ name: 'login'});
+            });
+
+             axios
+            .get("http://localhost:8000/api/admin/uang_keluar/jumlah")
+            .then((response) => {
+              total.value = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+              this.$router.push({ name: 'login'});
             });
         });
 
         function Delete(id, index) {
-          axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
-            this.pengumuman.splice(index, 1);
+          axios.delete(`http://localhost:8000/api/admin/uang_keluar/${id}`).then(() => {
+            this.uang_keluar.splice(index, 1);
             alert('delete data?')
           }).catch(error => {
             console.log(error.response.data)
@@ -187,7 +227,8 @@ export default {
         //return
         return {
           token,
-          pengumuman,
+          uang_keluar,
+          total,
           Delete,
 
         };

@@ -91,10 +91,10 @@
 </template>
 
 <script>
-import Head from '../../components/admin/HeadAdmin.vue'
-import Sidebar from '../../components/admin/SidebarAdmin.vue'
-import Footer from '../../components/admin/FooterAdmin.vue'
-import Header from '../../components/admin/HeaderAdmin.vue'
+import Head from "../../../components/admin/HeadAdmin.vue";
+import Sidebar from "../../../components/admin/SidebarAdmin.vue";
+import Footer from "../../../components/admin/FooterAdmin.vue";
+import Header from "../../../components/admin/HeaderAdmin.vue";
 import { reactive,onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
@@ -136,7 +136,12 @@ export default {
     const route = useRoute();
 
     onMounted(() => {
-     
+      //check Token exist
+                if(!token) {
+                    return router.push({
+                        name: 'login'
+                    })
+                }
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
       //get API from backend
       axios

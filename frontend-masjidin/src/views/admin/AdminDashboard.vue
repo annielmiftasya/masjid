@@ -63,6 +63,11 @@ import Head from '../../components/admin/HeadAdmin.vue'
 import Sidebar from '../../components/admin/SidebarAdmin.vue'
 import Footer from '../../components/admin/FooterAdmin.vue'
 import Header from '../../components/admin/HeaderAdmin.vue'
+import axios from "axios";
+import { onMounted} from "@vue/runtime-core";
+import { useRouter} from "vue-router";
+
+
 export default {
     components: {
         Head,
@@ -72,6 +77,36 @@ export default {
 
     },
 
- 
-}
+       setup() {
+             //state token
+            const token = localStorage.getItem('token')
+
+            //inisialisasi vue router on Composition API
+            const router = useRouter()
+
+     
+
+
+        
+        //mounted
+        onMounted(() => {
+            //check Token exist
+                if(!token) {
+                    return router.push({
+                        name: 'login'
+                    })
+                }
+        
+          axios.defaults.headers.common.Authorization = `Bearer ${token}`
+          //get API from laravel backend
+
+        });
+
+        
+        //return
+        return {
+          token,
+        };
+      },
+      }
 </script>

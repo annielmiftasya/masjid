@@ -23,14 +23,22 @@ const profile = {
     actions: {
         //action getProfile
         getProfile({ commit }) {
+
             //get data token dan user
             const token = localStorage.getItem("token");
+
+              //check Token exist
+                if(!token) {
+                    return Api.push({
+                        name: '/user/login'
+                    })
+                }
 
             //set axios header dengan type Authorization + Bearer token
             Api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
             //get data profile ke server
-            Api.get("/profile")
+            Api.get("/user/profile")
                 .then((response) => {
                     //commit ke mutation SET_PROFILE dengan response data
                     commit("SET_PROFILE", response.data.data);
@@ -72,6 +80,7 @@ const profile = {
             return new Promise((resolve, reject) => {
                 //get data token dan user
                 const token = localStorage.getItem("token");
+                
 
                 //set axios header dengan type Authorization + Bearer token
                 Api.defaults.headers.common[

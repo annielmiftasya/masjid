@@ -1,12 +1,13 @@
 <template>
     <div>
         <!-- header -->
-        <header>
+        <!-- <header>
             <div
                 class="bg-gray-700 text-white text-center fixed inset-x-0 top-0 z-10"
             >
+
                 <div
-                    class="container mx-auto grid grid-cols-10 p-3 sm:w-full md:w-5/12"
+                    class="container grid grid-cols-10 p-3 sm:w-full md:w-5/12"
                 >
                     <div
                         class="col-span-2 bg-white rounded-full h-10 w-10 p-1 mr-3 shadow-sm"
@@ -24,7 +25,24 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> -->
+
+  <nav class="font-sans fixed flex justify-center  text-center z-30 sm:flex-row sm:text-left sm:justify-between py-4 px-6 bg-gray-700 shadow sm:items-baseline w-full">
+  <div class="p-1 md:mb-2 sm:mb-0 md:p-1 md:mr-20 pb-0">
+      <router-link :to="{name: 'home'}">
+                            <img src="@/assets/images/muslim.png" class="md:h-10 md:w-10  h-5 w-5 md:inline-block">
+     </router-link>
+     </div>
+  <div class="-pt-6 md:px-20">
+    <a href="/one" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">BERANDA</a>
+    <a href="/one" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">INFAQ</a>
+    <a href="/two" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">PENGUMUMAN</a>
+    <a href="/two" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">KEUANGAN</a>
+    <a href="/three" class="md:text-sm text-xs no-underline text-white hover:text-blue-dark ml-10">PENGAJIAN</a>
+   
+
+  </div>
+</nav>
     </div>
 </template>
 

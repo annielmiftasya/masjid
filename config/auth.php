@@ -46,8 +46,9 @@ return [
         ],
 
         'user-api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
+            'hash' => false
         ],
 
         'admin' => [
@@ -90,10 +91,7 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+
     ],
 
     /*

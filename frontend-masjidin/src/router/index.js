@@ -12,22 +12,22 @@ const routes = [
     {
       path: '/pengumuman',
       name: 'pengumuman',
-      component: () => import( /* webpackChunkName: "pengumuman" */ '@/views/admin/IndexPengumuman.vue')
+      component: () => import( /* webpackChunkName: "pengumuman" */ '@/views/admin/pengumuman/IndexPengumuman.vue')
     },
     {
       path: '/pengumuman/tambah',
       name: 'pengumuman/tambah',
-      component: () => import( /* webpackChunkName: "pengumuman/tambah" */ '@/views/admin/TambahPengumuman.vue')
+      component: () => import( /* webpackChunkName: "pengumuman/tambah" */ '@/views/admin/pengumuman/TambahPengumuman.vue')
     },
     {
       path: '/pengumuman/detail',
       name: 'pengumuman/detail',
-      component: () => import( /* webpackChunkName: "pengumuman/detail" */ '@/views/admin/DetailPengumuman.vue')
+      component: () => import( /* webpackChunkName: "pengumuman/detail" */ '@/views/admin/pengumuman/DetailPengumuman.vue')
     },
     {
       path: '/pengumuman/edit/:id',
       name: 'pengumuman/edit',
-      component: () => import( /* webpackChunkName: "pengumuman/edit" */ '@/views/admin/EditPengumuman.vue')
+      component: () => import( /* webpackChunkName: "pengumuman/edit" */ '@/views/admin/pengumuman/EditPengumuman.vue')
     },
     {
       path: '/sholat',
@@ -45,19 +45,110 @@ const routes = [
       component: () => import( /* webpackChunkName: "sholat/edit" */ '@/views/admin/sholat/EditJadwalsholat.vue')
     },
     {
+      path: '/pengajian',
+      name: 'pengajian',
+      component: () => import( /* webpackChunkName: "pengajian" */ '@/views/admin/pengajian/IndexPengajian.vue')
+    },
+    {
+      path: '/pengajian/tambah',
+      name: 'pengajian/tambah',
+      component: () => import( /* webpackChunkName: "pengajian/tambah" */ '@/views/admin/pengajian/TambahPengajian.vue')
+    },
+    {
+      path: '/pengajian/edit/:id',
+      name: 'pengajian/edit',
+      component: () => import( /* webpackChunkName: "pengajian/edit" */ '@/views/admin/pengajian/EditPengajian.vue')
+    },
+    {
+      path: '/pengajian/detail/:id',
+      name: 'pengajian/detail',
+      component: () => import( /* webpackChunkName: "pengajian/detail" */ '@/views/admin/pengajian/DetailPengajian.vue')
+    },
+
+    {
+      path: '/uangkeluar',
+      name: 'uangkeluar',
+      component: () => import( /* webpackChunkName: "uangkeluar" */ '@/views/admin/keuangan_keluar/IndexUangkeluar.vue')
+    },
+    {
+      path: '/uangkeluar/tambah',
+      name: 'uangkeluar/tambah',
+      component: () => import( /* webpackChunkName: "uangkeluar/tambah" */ '@/views/admin/keuangan_keluar/TambahUangkeluar.vue')
+    },
+    {
+      path: '/uangkeluar/detail/:id',
+      name: 'uangkeluar/detail',
+      component: () => import( /* webpackChunkName: "uangkeluar/detail" */ '@/views/admin/keuangan_keluar/DetailUangKeluar.vue')
+    },
+    {
+      path: '/uangkeluar/edit/:id',
+      name: 'uangkeluar/edit',
+      component: () => import( /* webpackChunkName: "uangkeluar/edit" */ '@/views/admin/keuangan_keluar/EditUangKeluar.vue')
+    },
+    {
       path: '/login',
       name: 'login',
-      component: () => import( /* webpackChunkName: "login" */ '@/views/admin/LoginAdmin.vue')
+      component: () => import( /* webpackChunkName: "login" */ '@/views/admin/auth/LoginAdmin.vue')
     },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import( /* webpackChunkName: "register" */ '@/views/admin/auth/RegisterAdmin.vue')
+    },
+
+
+
      // USER
      {
       name: 'home',
       path: '/',
       component: () => import( /* webpackChunkName: "home" */ '@/views/user/IndexHome.vue')
   },
-  
-    
-    
+  {
+    name: '/donasi',
+    path: '/donasi',
+    component: () => import( /* webpackChunkName: "donasi" */ '@/views/user/donation/IndexDonation.vue')
+  },
+  {
+    name: '/donasi/tambah',
+    path: '/donasi/tambah',
+    component: () => import( /* webpackChunkName: "donasi/tambah" */ '@/views/user/donation/CreateDonation.vue')
+  },
+  {
+    name: '/profil',
+    path: '/profil',
+    component: () => import( /* webpackChunkName: "profil" */ '@/views/user/profil/IndexProfil.vue')
+  },
+  {
+    name: '/update-password',
+    path: '/update-password',
+    component: () => import( /* webpackChunkName: "update-password" */ '@/views/user/profil/UpdatePassword.vue')
+  },
+  {
+    name: '/detail/pengajian/:id',
+    path: '/detail/pengajian',
+    component: () => import( /* webpackChunkName: "detail/pengajian" */ '@/views/user/detail/DetailPengajian.vue')
+  },
+  {
+    name: '/detail/pengumuman/:id',
+    path: '/detail/pengumuman',
+    component: () => import( /* webpackChunkName: "detail/pengumuman" */ '@/views/user/detail/DetailPengumuman.vue')
+  },
+  {
+    name: '/detail/jadwalsholat',
+    path: '/detail/jadwalsholat',
+    component: () => import( /* webpackChunkName: "detail/jadwalsholat" */ '@/views/user/detail/DetailJadwal.vue')
+  },
+  {
+    name: '/login/user',
+    path: '/login/user',
+    component: () => import( /* webpackChunkName: "login/user" */ '@/views/user/auth/LoginUser.vue')
+  },
+  {
+    name: '/register/user',
+    path: '/register/user',
+    component: () => import( /* webpackChunkName: "register/user" */ '@/views/user/auth/RegisterUser.vue')
+  },
 ]
 
 //create router

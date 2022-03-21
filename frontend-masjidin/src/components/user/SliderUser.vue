@@ -1,75 +1,23 @@
 <template>
     <div>
-        <div v-if="sliders.length > 0">
-            <vueper-slides slide-image-inside autoplay>
-                 <template v-slot:arrow-left>
+        <div class="md:mt-0 mt-2" >
+           
+                 <template>
                     <i class="icon icon-arrow-left" />
                 </template>
-                    <vueper-slide v-for="(slider, i) in sliders" :key="i" :image="slider.image" />
-                <template v-slot:arrow-right>
+                <div class="" style="height:590px ">
+                      <img src="@/assets/images/masjid.jpg" class="w-full md:h-full h-80">
+                </div>
+                   
+                <template >
                     <i class="icon icon-arrow-right" />
                 </template>
-            </vueper-slides>
+         <div class="bg-black w-60 h-30 -mt-96 md:mb-14 mb-3 md:w-96 md:h-38 relative md:-mt-56 mx-5 md:mx-20 bg-opacity-70 font-poppins" >
+          <p class="text-center text-xs md:text-2xl font-semibold px-2 pt-4 md:px-5 md:pt-10 text-white">Masjid Al Muhajirin</p>
+          <p class="text-center text-xs md:text-2xl font-semibold px-2 pb-4 md:px-5  md:pt-4 md:pb-10 text-white"> Kota Kediri</p>
         </div>
-        <div v-else>
-            <ContentLoader />
         </div>
+     
+       
     </div>
 </template>
-
-<script>
-    //hook vue
-    import { computed, onMounted  } from 'vue'
-
-    //vuex
-    import { useStore } from 'vuex'
-
-    //content loader
-    import { ContentLoader } from 'vue-content-loader'
-    
-    //vueper slider
-    import { VueperSlides, VueperSlide } from 'vueperslides'
-    import 'vueperslides/dist/vueperslides.css'
-
-    export default {
-
-        components: {
-            ContentLoader,
-            VueperSlides, 
-            VueperSlide
-        },
-
-        setup() {
-
-            //store vuex
-            const store = useStore()
-
-            //onMounted akan menjalankan action "getSlider" di module "slider"
-            onMounted(() => {
-                store.dispatch('slider/getSlider')
-            })
-
-            //digunakan untuk get data state "sliders" di module "slider" 
-            const sliders = computed(() => {
-                return store.state.slider.sliders
-            })
-
-            return {
-                sliders,   // <-- sliders
-            }
-
-        }
-
-    }
-</script>
-
-<style scoped>
-    .vueperslide__image {
-        transform: scale(1.5) rotate(-10deg);
-    }
-
-    .vueperslide__title {
-        font-size: 7em;
-        opacity: 0.7;
-    }
-</style>
