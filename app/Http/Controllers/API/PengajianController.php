@@ -18,20 +18,9 @@ class PengajianController extends Controller
 
     public function index()
     {
-        //
-        try {
-            $pengajian = Pengajian::get();
-            $this->data = $pengajian;
-            $this->status = "success";
-        } catch (QueryException $e) {
-            $this->status = "failed";
-            $this->error = $e;
-        }
-        return response()->json([
-            "status" => $this->status,
-            "data" => $this->data,
-            "error" => $this->error
-        ]);
+        return Pengajian::when(request('search'), function ($query) {
+            $query->where('judul', 'like', '%' . request('search') . '%');
+        })->orderBy('id', 'desc')->paginate(5);
     }
     public function store(Request $request)
     {

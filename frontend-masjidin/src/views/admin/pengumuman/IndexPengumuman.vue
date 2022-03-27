@@ -35,13 +35,14 @@
                                             >
                                         </div>
                                         <div class="col-6 ml-0">
-                                            <form action="" method="post">
+                                            <form @submit.prevent="searchPengumuman" method="post">
                                                 <div class="input-group mb-3">
                                                     <input
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="Masukkan keyword pencarian.."
                                                         name="keyword"
+                                                        v-model="search"
                                                     />
                                                     <div
                                                         class="input-group-append"
@@ -67,7 +68,7 @@
                                         >
                                             <thead>
                                                 <tr>
-                                                    <th>No</th>
+                                                    <th style="width:10px">No</th>
                                                     <th>Judul</th>
                                                     <th>Tanggal</th>
                                                     <th>Aksi</th>
@@ -75,12 +76,14 @@
                                             </thead>
 
                                             <tbody
-                                                v-for="(
+                                             >
+                                            
+                                                <tr
+                                                   v-for="(
                                                     pengumuman, index
-                                                ) in pengumuman"
+                                                ) in pengumuman.data"
                                                 :key="pengumuman.id"
-                                            >
-                                                <tr>
+                                                >
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
                                                         {{ pengumuman.judul }}
@@ -113,6 +116,7 @@
                                                         </a>
                                                     </td>
                                                 </tr>
+                                                  <Pagination :data="pengumuman" @pagination-change-page="getResult" />
                                             </tbody>
                                         </table>
                                     </div>
@@ -142,26 +146,38 @@ import Sidebar from "../../../components/admin/SidebarAdmin.vue";
 import Footer from "../../../components/admin/FooterAdmin.vue";
 import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
-import { onMounted, ref} from "@vue/runtime-core";
+import { onMounted} from "@vue/runtime-core";
 import { useRouter} from "vue-router";
+import LaravelVuePagination from 'laravel-vue-pagination';
 
 export default {
     components: {
+         'Pagination': LaravelVuePagination,
         Head,
         Sidebar,
         Footer,
         Header,
     },
-        setup() {
-             //state token
+    data() {
+        return {
+          pengumuman: {},
+          search:'',
+        }
+      },
+
+    mounted(){
+        this.getResult();
+    },
+    setup() {
+
+               //state token
             const token = localStorage.getItem('token')
 
             //inisialisasi vue router on Composition API
             const router = useRouter()
 
-        //state user
-        const pengumuman = ref("");
-
+              
+   
 
         
         //mounted
@@ -172,37 +188,40 @@ export default {
                         name: 'login'
                     })
                 }
-        
-          axios.defaults.headers.common.Authorization = `Bearer ${token}`
-          //get API from laravel backend
-          axios
-            .get("http://localhost:8000/api/admin/pengumuman")
-            .then((response) => {
-              pengumuman.value = response.data.data;
-            })
-            .catch((error) => {
-              console.log(error.response.data);
-              this.$router.push({ name: 'login'});
-            });
-        });
-
-        function Delete(id, index) {
-          axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
-            this.pengumuman.splice(index, 1);
-            alert('delete data?')
-          }).catch(error => {
-            console.log(error.response.data)
-          })
-        }
+       
+        }); 
 
         //return
         return {
           token,
-          pengumuman,
-          Delete,
-
-        };
-      },
+       };
+    },
+    
+    methods: {
+        searchPengumuman(){
+        const token = localStorage.getItem('token')
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`
+        axios.get('http://localhost:8000/api/admin/pengumuman?search=' + this.search)
+        .then(response =>  this.pengumuman = response.data)
+        },
+         getResult(page = 1) {
+             const token = localStorage.getItem('token')
+             axios.defaults.headers.common.Authorization = `Bearer ${token}`
+            axios.get('http://localhost:8000/api/admin/pengumuman?page=' + page)
+                .then(response => {
+                    this.pengumuman = response.data;
+                });
+        },
+        Delete(id, index) {
+          axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
+         this.pengumuman.splice(index, 1);
+            alert('Apakah anda yakin ingin menghapus data ini?')
+          }).catch(error => {
+            console.log(error.response.data)
+          })
+        }
+    }
+  
    
 };
 </script>

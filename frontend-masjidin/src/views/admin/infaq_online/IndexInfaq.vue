@@ -22,27 +22,19 @@
                                     <h6
                                         class="m-0 font-weight-bold text-primary"
                                     >
-                                        Data Pengajian
+                                        Data Infaq Online
                                     </h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-2 mr-0">
-                                            <a
-                                                href="/pengajian/tambah"
-                                                class="btn btn-success mb-3"
-                                                >Tambah Data</a
-                                            >
-                                        </div>
                                         <div class="col-6 ml-0">
-                                            <form @submit.prevent="searchPengajian" method="post">
+                                            <form action="" method="post">
                                                 <div class="input-group mb-3">
                                                     <input
                                                         type="text"
                                                         class="form-control"
                                                         placeholder="Masukkan keyword pencarian.."
                                                         name="keyword"
-                                                        v-model="search"
                                                     />
                                                     <div
                                                         class="input-group-append"
@@ -69,56 +61,63 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th width="500px">Judul</th>
                                                     <th>Tanggal</th>
-                                                    <th>Aksi</th>
+                                                    <th>Nama</th>
+                                                    <th>Nominal</th>
+                                                    <th>Doa</th>
+                                                    <th>Status</th>
                                                 </tr>
+                                                
+                                                
                                             </thead>
-
+                                       
                                             <tbody
-                                              
+                                                v-for="(
+                                                    infaqs, index
+                                                ) in infaqs.data"
+                                                :key="infaqs.id"
                                             >
-                                                <tr   v-for="(
-                                                    pengajian, index
-                                                ) in pengajian.data"
-                                                :key="pengajian.id">
-                                                    
+                                                <tr>
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
-                                                        {{pengajian.judul }}
+                                                        {{ infaqs.updated_at }}
                                                     </td>
                                                     <td>
-                                                        {{pengajian.tanggal }}
+                                                        {{ infaqs.name}}
                                                     </td>
-                    
-                                                    <td
+                                                        <td>
+                                                        Rp. {{ infaqs.amount }}
+                                                    </td>
+                                                      <td>
+                                                        {{ infaqs.pray}}
+                                                    </td>
+                                                      <td>
+                                                        {{ infaqs.status}}
+                                                    </td>
+                                                    <!-- <td
                                                         class="px-10 py-2 text-center"
-                                                    >
-                                                        <router-link :to="{name: 'pengajian/detail', params: {id: pengajian.id }}" class="btn btn-info btn-circle btn-sm">
+                                                    > -->
+                                                        <!-- <router-link :to="{name: 'infaqs/detail', params: {id: infaq.id }}" class="btn btn-info btn-circle btn-sm">
                                                             <i
                                                                 class="fas fa-info-circle"
                                                             ></i>
-                                                        </router-link>
-                                                         <router-link :to="{name: 'pengajian/edit', params: {id: pengajian.id }}" class="btn btn-warning btn-circle btn-sm">
-                                                            <i
-                                                                class="fas fa-edit"
-                                                            ></i>
-                                                          
-                                                        </router-link>
-                                                        <a
-                                                           @click.prevent="Delete(pengajian.id)" 
-                                                            class="btn btn-danger btn-circle btn-sm"
-                                                        >
-                                                            <i
-                                                                class="fas fa-trash"
-                                                            ></i>
-                                                        </a>
-                                                    </td>
+                                                        </router-link> -->
+                                                    <!-- </td> -->
                                                 </tr>
-                                                    <Pagination :data="pengajian" @pagination-change-page="getResult" />
+                                               
+                                                
                                             </tbody>
+                                                  
                                         </table>
-                                    
+                                        <table class="table table-bordered">
+                                                <tr class="d-flex justify-content-end ">
+                                                    
+                                                    <th style="width:290px">Total Infaq Online</th>
+                                                    <th style="width:370px">Rp{{total}}</th>
+                                                </tr>
+                                        </table>
+                                         <Pagination :data="infaqs" @pagination-change-page="getResult" />
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -146,42 +145,41 @@ import Sidebar from "../../../components/admin/SidebarAdmin.vue";
 import Footer from "../../../components/admin/FooterAdmin.vue";
 import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
-import { onMounted } from "@vue/runtime-core";
+import { onMounted} from "@vue/runtime-core";
 import { useRouter} from "vue-router";
 import LaravelVuePagination from 'laravel-vue-pagination';
-
-
-
+ 
 export default {
     components: {
-        'Pagination': LaravelVuePagination,
+         'Pagination': LaravelVuePagination,
         Head,
         Sidebar,
         Footer,
         Header,
     },
-        data() {
+    data() {
         return {
-          pengajian: {},
-          search:'',
+          infaqs: {},
+          total:{},
         }
       },
-
     mounted(){
         this.getResult();
     },
-    setup() {
 
-               //state token
+        setup() {
+             //state token
             const token = localStorage.getItem('token')
 
             //inisialisasi vue router on Composition API
             const router = useRouter()
 
-                // //state user
-                // const pengajian = ref("");
+            //state user
+            // const infaq = ref("");
 
-   
+               //state user
+            // const total = ref("");
+
 
         
         //mounted
@@ -192,40 +190,43 @@ export default {
                         name: 'login'
                     })
                 }
-       
-        }); 
+        
 
+        });
         //return
         return {
           token,
-       };
-    },
-    
-    methods: {
-        searchPengajian(){
-         const token = localStorage.getItem('token')
+        };
+      },
+   methods:{
+        getResult(page = 1) {
+        const token = localStorage.getItem('token')
         axios.defaults.headers.common.Authorization = `Bearer ${token}`
-        axios.get('http://localhost:8000/api/admin/pengajian?search=' + this.search)
-        .then(response =>  this.pengajian = response.data)
+          //get API from laravel backend
+          axios
+            .get('http://localhost:8000/api/admin/infaq?page=' + page)
+            .then((response) => {
+              this.infaqs= response.data.data;
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+              this.$router.push({ name: 'login'});
+            });
+            
+            axios
+            .get('http://localhost:8000/api/admin/infaq/total')
+            .then((response) => {
+              this.total = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+              this.$router.push({ name: 'login'});
+            });
+            
+            
         },
-         getResult(page = 1) {
-             const token = localStorage.getItem('token')
-             axios.defaults.headers.common.Authorization = `Bearer ${token}`
-            axios.get('http://localhost:8000/api/admin/pengajian?page=' + page)
-                .then(response => {
-                    this.pengajian = response.data;
-                });
-        },
-        Delete(id, index) {
-          axios.delete(`http://localhost:8000/api/admin/pengajian/${id}`).then(() => {
-         this.pengajian.splice(index, 1);
-            alert('Apakah anda yakin ingin menghapus data ini?')
-          }).catch(error => {
-            console.log(error.response.data)
-          })
-        }
-    }
-  
-   
+       
+            
+   }
 };
 </script>

@@ -41,71 +41,56 @@
                     <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
                     <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
                     <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <template :cell(actions)="row">
+                    <!-- <template :cell(actions)="row">
                         <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template>
+                    </template> -->
                 </div>
                   <div class="rounded-xl border md:w-80 md:h-80 h-56">
                     <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
                     <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
                     <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <template :cell(actions)="row">
+                    <!-- <template :cell(actions)="row">
                         <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template>
+                    </template> -->
                 </div>
                   <div class="rounded-xl border md:w-80 md:h-80 h-56">
                     <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
                     <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
                     <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <template :cell(actions)="row">
+                    <!-- <template :cell(actions)="row">
                         <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template>
+                    </template> -->
                 </div>
             </div>
             
             </div>
 
-<!-- Berita -->
+            <!-- Berita -->
             <div class="md:mt-36 mt-20 pt-20 md:px-20 pb-20 px-5 mt-10 -z-30 md:mb-40 mb-10 bg-indigo-50">
             <div class="w-10 md:w-24 bg-ternary-blue opacity-60 h-6px mt-5 md:mb-5 mb-2"></div>
-            <h6 class="md:text-40px text-base md:text-2xl font-bold font-montserrat text-secondary-blue">Berita</h6>
+            <h6 class="md:text-40px text-base md:text-2xl font-bold font-montserrat text-secondary-blue">Pengajian</h6>
 
-            <div class="md:block hidden md:mt-10">
-              <div class="flex flex-row items-center">
+            <div class=" md:mt-10">
+              <div class="flex flex-row items-center mt-5"   
+              v-for="(pengajian) in pengajian.data" :key="pengajian.id" >
               
                 <div class="mt-5">
-                  <img src="@/assets/images/alquran.jpg" alt="Pengumuman" class="md:w-500px w-445px h-64">
+                  <img :src="path + '/Pengajian/' + pengajian.foto" alt="Pengumuman" style="width:400px; height:250px">
                 </div>
-                  <div class="md:mt-0 mt-5 md:w-2/4 w-full ml-20">
-                      <h6 class="font-dm-sans font-medium text-xl text-six-blue">hai</h6>
-                      <p class="font-dm-sans font-normal text-base text-gray-700 my-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta saepe explicabo autem debitis ratione commodi suscipit? Iste, corporis fugiat maiores pariatur ipsum doloremque dolores saepe totam dignissimos facere sunt error.</p>
+                  <div class="md:mt-0 mt-5 md:w-2/4 w-full ml-10">
+                      <h6 class="font-dm-sans font-medium text-xl text-six-blue">{{pengajian.judul}}</h6>
                     <div>
                       <template>
-                          
                           <button class="border-2 px-2 py-2 rounded-2xl">Baca Selengkapnya</button>
                       </template>
                     </div>
                   </div>
               </div>
+              
+                                      
             </div>
-            
-            <!-- MOBILE -->
-            <div class="inline w-full md:hidden block">
-                <div class="md:float-right pt-10 md:px-20">
-                    <div class="mt-5">
-                        <img src="@/assets/images/alquran.jpg" alt="Pengumuman" class="md:w-500px w-full h-64 md:object-cover">
-                    </div>
-                </div>
-                <div class="md:mt-0 mt-5 md:w-3/5 w-full items-center">
-                    <h6 class="font-dm-sans font-medium text-xl text-six-blue">hai</h6>
-                    <p class="font-dm-sans font-normal text-base text-gray-400 my-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, nulla asperiores! Architecto quae iusto optio perspiciatis vero vel error labore, quia enim quaerat, harum id minima dolore quasi totam tempora!</p>
-                  <div>
-                    <template :cell(actions)="row">
-                        <button variant="warning" size="sm" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template>
-                  </div>
-                </div>
-            </div>
+             <Pagination :data="pengajian" @pagination-change-page="getResult" />
+
         </div>
 
         
@@ -145,20 +130,87 @@
     import CategoryHome from '@/components/user/CategoryHome.vue'
     import Header from '@/components/user/HeaderUser.vue'
     import Footer from '@/components/user/FooterUser.vue'
+    import axios from "axios";
+    import { onMounted} from "@vue/runtime-core";
+    import { useRouter} from "vue-router";
+    import LaravelVuePagination from 'laravel-vue-pagination';
 
-    //vue content loader
-    // import { FacebookLoader } from 'vue-content-loader'
+    
 
     export default {
-
+       
         components: {
             Header,
             Footer,
-            Slider,         // <-- register component slider
-            CategoryHome,   // <-- register component CategoryHome
-            // FacebookLoader  // <-- register component FacebooLoader dari Vue Content Loader
+            Slider,     
+            CategoryHome, 
+             'Pagination': LaravelVuePagination,  
+           
         },
+         data() {
+        return {
+          path: "http://localhost:8000",
+          pengajian: {},
+        }
+      },
+    mounted(){
+        this.getResult();
+    },
 
+        setup() {
+             //state token
+            const token = localStorage.getItem('token')
+
+            //inisialisasi vue router on Composition API
+            const router = useRouter()
+
+            //state user
+            // const infaq = ref("");
+
+               //state user
+            // const total = ref("");
+
+
+        
+        //mounted
+        onMounted(() => {
+            //check Token exist
+                if(!token) {
+                    return router.push({
+                        name: 'login'
+                    })
+                }
+        
+
+        });
+        //return
+        return {
+          token,
+        };
+      },
+    
+   methods:{
+        getResult(page = 1) {
+         //get API from laravel backend
+          axios
+            .get('http://localhost:8000/api/pengajian/user?page=' + page)
+            .then((response) => {
+              this.pengajian= response.data;
+            })
+            .catch((error) => {
+              console.log(error.response.data);
+              // this.$router.push({ name: 'login'});
+            });
+            
+            
+            
+        },
+        
+       
+            
+   },
+
+};
         // setup() {
 
         //     //store vuex
@@ -180,5 +232,5 @@
 
         // }
 
-    }
-</script>
+    
+</script>   

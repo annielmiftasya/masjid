@@ -86,6 +86,31 @@ const routes = [
       component: () => import( /* webpackChunkName: "uangkeluar/edit" */ '@/views/admin/keuangan_keluar/EditUangKeluar.vue')
     },
     {
+      path: '/uangmasuk',
+      name: 'uangmasuk',
+      component: () => import( /* webpackChunkName: "uangmasuk" */ '@/views/admin/keuangan_masuk/IndexUangMasuk.vue')
+    },
+    {
+      path: '/uangmasuk/tambah',
+      name: 'uangmasuk/tambah',
+      component: () => import( /* webpackChunkName: "uangmasuk/tambah" */ '@/views/admin/keuangan_masuk/TambahUangMasuk.vue')
+    },
+    {
+      path: '/uangmasuk/detail/:id',
+      name: 'uangmasuk/detail',
+      component: () => import( /* webpackChunkName: "uangmasuk/detail" */ '@/views/admin/keuangan_masuk/DetailUangMasuk.vue')
+    },
+    {
+      path: '/uangmasuk/edit/:id',
+      name: 'uangmasuk/edit',
+      component: () => import( /* webpackChunkName: "uangmasuk/edit" */ '@/views/admin/keuangan_masuk/EditUangMasuk.vue')
+    },
+    {
+      path: '/infaq',
+      name: 'infaq',
+      component: () => import( /* webpackChunkName: "infaq" */ '@/views/admin/infaq_online/IndexInfaq.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import( /* webpackChunkName: "login" */ '@/views/admin/auth/LoginAdmin.vue')

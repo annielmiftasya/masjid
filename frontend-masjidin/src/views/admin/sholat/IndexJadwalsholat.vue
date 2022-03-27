@@ -34,28 +34,29 @@
                                                 >Tambah Data</a
                                             >
                                         </div>
-                                        <div class="col-6 ml-0">
-                                            <form action="" method="post">
-                                                <div class="input-group mb-3">
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Masukkan keyword pencarian.."
-                                                        name="keyword"
-                                                    />
-                                                    <div
-                                                        class="input-group-append"
-                                                    >
-                                                        <button
-                                                            class="btn btn-outline-primary"
-                                                            type="submit"
-                                                            id="button-addon2"
-                                                        >
-                                                            Cari
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                        <div class="col-md-8 ml-md-0 col-8 ml-3 ">
+                                    <form @submit.prevent="searchSholat" method="get">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <input type="date" 
+                                            class="form-control"
+                                            name="search"
+                                            v-model="search"
+                                            required>
+                                        </div>
+                                        -
+                                        <div class="col-auto">
+                                            <input type="date"
+                                            class="form-control"
+                                            name="search1"
+                                             v-model="search1"
+                                            required>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-primary" type="submit">Cari</button>
+                                        </div>
+                                    </div>
+                                </form>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -79,15 +80,17 @@
                                                     <th>Isya</th>
                                                     <th>Aksi</th>
                                                 </tr>
+                                             
                                             </thead>
 
                                             <tbody
-                                                v-for="(
-                                                    sholat, index
-                                                ) in sholat"
-                                                :key="sholat.id"
+                                                
                                             >
-                                                <tr>
+                                                <tr   v-for="(
+                                                    sholat, index
+                                                ) in sholat.data"
+                                                :key="sholat.id"
+                                                >
                                                     <td>{{ index + 1 }}</td>
                                                     <td>
                                                         {{sholat.tanggal }}
@@ -137,6 +140,7 @@
                                                         </a>
                                                     </td>
                                                 </tr>
+                                                  <Pagination :data="sholat" @pagination-change-page="getResult" />
                                             </tbody>
                                         </table>
                                     </div>
@@ -166,51 +170,83 @@ import Sidebar from "../../../components/admin/SidebarAdmin.vue";
 import Footer from "../../../components/admin/FooterAdmin.vue";
 import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted} from "@vue/runtime-core";
 import { useRouter} from "vue-router";
-
+import LaravelVuePagination from 'laravel-vue-pagination';
 
 export default {
     components: {
+         'Pagination': LaravelVuePagination,
         Head,
         Sidebar,
         Footer,
         Header,
     },
-        setup() {
+    data() {
+        return {
+          sholat: {},
+          search:'',
+          search1:''
+        }
+      },
+
+    mounted(){
+        this.getResult();
+    },
+    setup() {
+
                //state token
             const token = localStorage.getItem('token')
 
             //inisialisasi vue router on Composition API
             const router = useRouter()
 
-            //state user
-            const sholat = ref("");
+                // //state user
+                // const sholat = ref("");
 
+   
 
         
         //mounted
         onMounted(() => {
-          //check Token exist
+            //check Token exist
                 if(!token) {
                     return router.push({
                         name: 'login'
                     })
                 }
+       
+        }); 
 
-          axios.defaults.headers.common.Authorization = `Bearer ${token}`
-          //get API from laravel backend
-          axios
-            .get("http://localhost:8000/api/admin/sholat")
-            .then((response) => {
-              sholat.value = response.data.data;
-            })
-            .catch((error) => {
-              console.log(error.response.data);
-            });
-        });
+        //return
+        return {
+          token,
+       };
+    },
+    
+    methods: {
+        searchSholat(){
+        const token = localStorage.getItem('token')
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`
+        var params = new URLSearchParams();
+        params.append("search", this.search);
+        params.append("search1", this.search1);
+        var request = {
+        params: params
+        };
+        axios.get('http://localhost:8000/api/admin/sholat',request)
+        .then(response =>  this.sholat = response.data)
+        },
 
-        function Delete(id, index) {
+         getResult(page = 1) {
+             const token = localStorage.getItem('token')
+             axios.defaults.headers.common.Authorization = `Bearer ${token}`
+            axios.get('http://localhost:8000/api/admin/sholat1?page=' + page)
+                .then(response => {
+                    this.sholat = response.data;
+                });
+        },
+        Delete(id, index) {
           axios.delete(`http://localhost:8000/api/admin/sholat/${id}`).then(() => {
          this.sholat.splice(index, 1);
             alert('Apakah anda yakin ingin menghapus data ini?')
@@ -218,15 +254,8 @@ export default {
             console.log(error.response.data)
           })
         }
-
-        //return
-        return {
-          token,
-          sholat,
-          Delete,
-
-        };
-      },
+    }
+  
    
 };
 </script>

@@ -9,10 +9,10 @@
                 <div class="bg-white p-5 rounded-md shadow-md mb-5">
                     <div class="flex flex-col justify-center items-center relative">
                         <div>
-                            <img :src="profile.avatar" class="rounded-full w-28 h-28 object-cover">
+                            <img :src="form.avatar" class="rounded-full w-28 h-28 object-cover">
                         </div>
                         <div class="mt-4">
-                            <input type="file" @change="uploadFoto" class="rounded bg-gray-300 p-2 w-full shadow-sm">
+                            <input type="file" @change="uploadFoto"  ref="avatar" id="file" class="rounded bg-gray-300 p-2 w-full shadow-sm">
                         </div>
                     </div>
                 </div>
@@ -24,14 +24,14 @@
                             <label class="mt-2">Nama Lengkap</label>
                             <input type="text"
                                 class="mt-2 appearance-none w-full bg-gray-200 rounded h-7 shadow-sm placeholder-gray-700 focus:outline-none focus:placeholder-gray-600 focus:bg-gray-300 focus-within:text-gray-600 p-5"
-                                placeholder="Nama Lengkap" v-model="profile.name">
+                                placeholder="Nama Lengkap" v-model="form.name">
                         </div>
 
                         <div class="mb-2">
                             <label class="mt-2">Alamat Email</label>
                             <input type="email"
                                 class="mt-2 appearance-none w-full bg-gray-200 opacity-70 rounded h-7 shadow-sm placeholder-gray-600 focus:outline-none focus:placeholder-gray-600 focus:bg-gray-300 focus-within:text-gray-600 p-5"
-                             placeholder="Alamat Email" v-model="profile.email">
+                             placeholder="Alamat Email" v-model="form.email">
                         </div>
 
                         <div>
@@ -71,7 +71,7 @@
     data() {
         return {
         // ref
-            profile: ({
+           form: ({
                 name: '',
                 avatar: ''
             })
@@ -83,34 +83,38 @@
         uploadFoto(e){
         let file = e.target.files[0];
 
-        this.profile.file = file;
+        this.form.file = file;
         let reader = new FileReader();  
         reader.onloadend = () => {
-            this.profile.avatar = reader.result;
+            this.form.avatar = reader.result;
         }              
         reader.readAsDataURL(file);        
         },
      
         getPhoto() {
-            let photo =
-                this.form.foto.length > 0
-                    ? this.user.data.photo_responses[0]["path"].split("/").pop()
-                    : null;
-            return photo;
+            // let photo =
+            //     this.form.foto.length > 0
+            //         ? this.user.data.photo_responses[0]["path"].split("/").pop()
+            //         : null;
+            // return photo;
+             
+        let photo = (this.form.avatar.length > 100) ? this.form.avatar : "users/"+ this.form.avatar;
+        return photo;
+     
         },
         //Insert Photo
         update(){
         // Code Baru
         let formData = new FormData();
 
-        formData.append('name', this.profile.name);
-        formData.append('avatar', this.profile.file);
+        formData.append('name', this.form.name);
+        formData.append('avatar', this.form.file);
         
 
         const token = localStorage.getItem('token')
         axios.defaults.headers.common.Authorization = `Bearer ${token}`
 
-        axios.post(`http://localhost:8000/api/user/profile}`, 
+        axios.post(`http://localhost:8000/api/user/profil}`, 
             // Code Baru
             formData, {
             headers: {
@@ -149,9 +153,9 @@
   
           axios.get(`http://localhost:8000/api/user/profile`)
           .then(response => { 
-              this.profile.name = response.data.data.name;
-              this.profile.email = response.data.data.email;
-              this.profile.avatar = response.data.data.avatar;
+              this.form.name = response.data.data.name;
+              this.form.email = response.data.data.email;
+              this.form.avatar = response.data.data.avatar;
           })
           .catch(error => {
               console.error(error);

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Uangkeluar;
+use App\Models\Uangmasuk;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
-class UangKeluarController extends Controller
+class UangMasukController extends Controller
 {
     //
     //
@@ -23,9 +23,9 @@ class UangKeluarController extends Controller
         //
         try {
             if ($id) {
-                $berita = Uangkeluar::where('id', $id)->first();
+                $berita = Uangmasuk::where('id', $id)->first();
             } else {
-                $berita = Uangkeluar::get();
+                $berita = Uangmasuk::get();
             }
             $this->data = $berita;
             $this->status = "success";
@@ -40,13 +40,14 @@ class UangKeluarController extends Controller
         ]);
     }
 
-    public function SumUangKeluar()
+    public function SumUangMasuk()
     {
         //
-        return Uangkeluar::sum('nominal');
+        return Uangmasuk::sum('nominal');
+
 
         // try {
-        //     $total = Uangkeluar::sum('nominal');
+        //     $total = Uangmasuk::sum('nominal');
 
         //     $this->data = $total;
         //     $this->status = "success";
@@ -64,9 +65,9 @@ class UangKeluarController extends Controller
     {
         //
         try {
-            $uangkeluar = Uangkeluar::paginate(5);
+            $uangmasuk = Uangmasuk::paginate(5);
 
-            $this->data = $uangkeluar;
+            $this->data = $uangmasuk;
             $this->status = "success";
         } catch (QueryException $e) {
             $this->status = "failed";
@@ -99,13 +100,13 @@ class UangKeluarController extends Controller
             );
         }
         $date = Carbon::now()->toDateString();
-        $credit = new Uangkeluar();
+        $credit = new Uangmasuk();
         $credit->nominal = $request->nominal;
         $credit->keterangan = $request->keterangan;
         $credit->date = $date;
         if ($request->bukti && $request->bukti->isValid()) {
             $file_name = $request->bukti->getClientOriginalName();
-            $request->bukti->move(public_path('Uangkeluar'), $file_name);
+            $request->bukti->move(public_path('Uangmasuk'), $file_name);
             $path = $file_name;
             $credit->bukti = $path;
         }
@@ -152,7 +153,7 @@ class UangKeluarController extends Controller
             $tanggal_awal  = $request->input('tanggal_awal');
             $tanggal_akhir = $request->input('tanggal_akhir');
 
-            $credit = Uangkeluar::whereDate('infaqs.updated_at', '>=', $tanggal_awal)
+            $credit = Uangmasuk::whereDate('infaqs.updated_at', '>=', $tanggal_awal)
                 ->whereDate('infaqs.updated_at', '<=', $tanggal_akhir)
                 ->get();
 
@@ -180,13 +181,13 @@ class UangKeluarController extends Controller
             ]);
         }
         $date = Carbon::now()->toDateString();
-        $credit = Uangkeluar::find($id);
+        $credit = Uangmasuk::find($id);
         $credit->nominal = $request->nominal;
         $credit->keterangan = $request->keterangan;
         $credit->date = $date;
         if ($request->bukti && $request->bukti->isValid()) {
             $file_name = $request->bukti->getClientOriginalName();
-            $request->bukti->move(public_path('Uangkeluar'), $file_name);
+            $request->bukti->move(public_path('Uangmasuk'), $file_name);
             $path = $file_name;
             $credit->bukti = $path;
         }
@@ -201,7 +202,7 @@ class UangKeluarController extends Controller
     public function destroy($id)
     {
         //
-        $credit = Uangkeluar::where('id', $id);
+        $credit = Uangmasuk::where('id', $id);
         $credit->delete();
 
         return response(

@@ -58,9 +58,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="utilities-color.html">Dana Infaq</a>
-                        <a class="collapse-item" href="utilities-border.html">Donatur</a>
-                        <a class="collapse-item" href="utilities-animation.html">Laporan Keuangan</a>
+                        <a class="collapse-item" href="/infaq">Dana Infaq Online</a>
+                        <a class="collapse-item" href="/uangmasuk">Dana Infaq Offline</a>
+                        <a class="collapse-item" href="/uangkeluar">Uang Keluar</a>
                     </div>
                 </div>
             </li>

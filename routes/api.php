@@ -10,7 +10,7 @@ use App\Http\Controllers\API\InfaqController;
 use App\Http\Controllers\API\ProfileController;
 use App\Http\Controllers\API\LaporanKeuanganController;
 use App\Http\Controllers\API\UangKeluarController;
-
+use App\Http\Controllers\API\UangMasukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,15 +50,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:ad
    //Laporan Uang masuk
    Route::post('/uangmasuk', [LaporanKeuanganController::class, 'UangMasuk']);
 
+   //laporan uang masuk
+   Route::post('/uang_masuk', [UangMasukController::class, 'store']);
+   Route::post('/uang_masuk/{id}', [UangMasukController::class, 'update']);
+   Route::get('/uang_masuk/detail/{id}', [UangMasukController::class, 'showdata']);
+   Route::get('/uang_masuk', [UangMasukController::class, 'index']);
+   Route::post('/uang_masuk/filter', [UangMasukController::class, 'show']);
+   Route::delete('/uang_masuk/{id}', [UangMasukController::class, 'destroy']);
+   Route::get('/uang_masuk/jumlah', [UangMasukController::class, 'SumUangMasuk']);
 
    //laporan uang keluar
-   Route::post('/uang_keluar', [UangkeluarController::class, 'store']);
-   Route::post('/uang_keluar/{id}', [UangkeluarController::class, 'update']);
-   Route::get('/uang_keluar/detail/{id}', [UangkeluarController::class, 'showdata']);
+   Route::post('/uang_keluar', [UangKeluarController::class, 'store']);
+   Route::post('/uang_keluar/{id}', [UangKeluarController::class, 'update']);
+   Route::get('/uang_keluar/detail/{id}', [UangKeluarController::class, 'showdata']);
    Route::get('/uang_keluar', [UangKeluarController::class, 'index']);
    Route::post('/uang_keluar/filter', [UangKeluarController::class, 'show']);
    Route::delete('/uang_keluar/{id}', [UangKeluarController::class, 'destroy']);
-   Route::get('/uang_keluar/jumlah', [UangkeluarController::class, 'SumUangKeluar']);
+   Route::get('/uang_keluar/jumlah', [UangKeluarController::class, 'SumUangKeluar']);
 
 
    //pengumuman
@@ -81,8 +89,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:ad
    Route::post('/sholat', [JadwalSholatController::class, 'store']);
    Route::post('/sholat/{id}', [JadwalSholatController::class, 'update']);
    Route::get('/sholat', [JadwalSholatController::class, 'index']);
+   Route::get('/sholat1', [JadwalSholatController::class, 'index1']);
    Route::get('/sholat/{id}', [JadwalSholatController::class, 'show']);
    Route::delete('/sholat/{id}', [JadwalSholatController::class, 'destroy']);
+
+
+   //Infaq
+   Route::get('/infaq', [InfaqController::class, 'GetAdmin']);
+   Route::get('/infaq/total', [InfaqController::class, 'SumInfaq']);
 });
 
 
@@ -93,7 +107,10 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:user-api']], function (
    Route::post('/infaq/notification', [InfaqController::class, 'notificationHandler']);
 
    //profile
+
+   Route::post('/profil', [ProfileController::class, 'update']);
    Route::get('/profile', [ProfileController::class, 'index']);
-   Route::post('/profile', [ProfileController::class, 'update']);
    Route::post('/profile/password', [ProfileController::class, 'updatePassword']);
 });
+
+Route::get('/pengajian/user', [PengajianController::class, 'index']);

@@ -79,7 +79,7 @@
                                             <tbody
                                                 v-for="(
                                                     uang_keluar, index
-                                                ) in uang_keluar"
+                                                ) in uang_keluar.data"
                                                 :key="uang_keluar.id"
                                             >
                                                 <tr>
@@ -127,10 +127,11 @@
                                                 <tr class="d-flex justify-content-end ">
                                                     
                                                     <th style="width:290px">Total Pengeluaran</th>
-                                                    <th style="width:370px">Rp. {{total.data}}</th>
+                                                    <th style="width:370px">Rp.{{total}}</th>
                                                 </tr>
                                         </table>
-                                     
+                                       <Pagination :data="uang_keluar" @pagination-change-page="getResult" />
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -158,15 +159,26 @@ import Sidebar from "../../../components/admin/SidebarAdmin.vue";
 import Footer from "../../../components/admin/FooterAdmin.vue";
 import Header from "../../../components/admin/HeaderAdmin.vue";
 import axios from "axios";
-import { onMounted, ref} from "@vue/runtime-core";
+import { onMounted} from "@vue/runtime-core";
 import { useRouter} from "vue-router";
+import LaravelVuePagination from 'laravel-vue-pagination';
 
 export default {
     components: {
+         'Pagination': LaravelVuePagination,
         Head,
         Sidebar,
         Footer,
         Header,
+    },
+      data() {
+        return {
+          uang_keluar: {},
+          total:{},
+        }
+      },
+       mounted(){
+        this.getResult();
     },
         setup() {
              //state token
@@ -175,11 +187,7 @@ export default {
             //inisialisasi vue router on Composition API
             const router = useRouter()
 
-        //state user
-        const uang_keluar = ref("");
-
-         //state user
-        const total = ref("");
+        
 
 
         
@@ -192,12 +200,23 @@ export default {
                     })
                 }
         
-          axios.defaults.headers.common.Authorization = `Bearer ${token}`
+         
+        });
+
+        //return
+        return {
+          token,
+
+        };
+      },
+      methods:{
+        getResult(page=1){
+            const token = localStorage.getItem('token')
+            axios.defaults.headers.common.Authorization = `Bearer ${token}`
           //get API from laravel backend
-          axios
-            .get("http://localhost:8000/api/admin/uang_keluar")
+            axios.get('http://localhost:8000/api/admin/uang_keluar?page=' +page)
             .then((response) => {
-              uang_keluar.value = response.data.data;
+              this.uang_keluar= response.data.data;
             })
             .catch((error) => {
               console.log(error.response.data);
@@ -207,15 +226,14 @@ export default {
              axios
             .get("http://localhost:8000/api/admin/uang_keluar/jumlah")
             .then((response) => {
-              total.value = response.data;
+              this.total= response.data;
             })
             .catch((error) => {
               console.log(error.response.data);
               this.$router.push({ name: 'login'});
             });
-        });
-
-        function Delete(id, index) {
+        },
+        Delete(id, index) {
           axios.delete(`http://localhost:8000/api/admin/uang_keluar/${id}`).then(() => {
             this.uang_keluar.splice(index, 1);
             alert('delete data?')
@@ -224,15 +242,6 @@ export default {
           })
         }
 
-        //return
-        return {
-          token,
-          uang_keluar,
-          total,
-          Delete,
-
-        };
-      },
-   
+      }
 };
 </script>

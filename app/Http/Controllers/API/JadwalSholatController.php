@@ -18,19 +18,15 @@ class JadwalSholatController extends Controller
     public function index()
     {
         //
-        try {
-            $sholat = JadwalSholat::get();
-            $this->data = $sholat;
-            $this->status = "success";
-        } catch (QueryException $e) {
-            $this->status = "failed";
-            $this->error = $e;
-        }
-        return response()->json([
-            "status" => $this->status,
-            "data" => $this->data,
-            "error" => $this->error
-        ]);
+        return JadwalSholat::when(request('search', 'search1'), function ($query) {
+            $query->whereBetween('tanggal', [request('search'), request('search1')]);
+        })->orderBy('id', 'desc')->paginate(5);
+    }
+
+    public function index1()
+    {
+        //
+        return JadwalSholat::orderBy('id', 'desc')->paginate(5);
     }
     public function store(Request $request)
     {

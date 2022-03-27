@@ -35,6 +35,8 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        //get data profile
+        $donatur = User::whereId(auth()->guard('user-api')->user()->id)->first();
         $validator = Validator::make($request->all(), [
             'name' => 'required'
         ]);
@@ -43,8 +45,7 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        //get data profile
-        $donatur = User::whereId(auth()->guard('user-api')->user()->id)->first();
+
 
         //update with upload avatar
         if ($request->file('avatar')) {

@@ -18,21 +18,11 @@ class AdminPengumumanController extends Controller
 
     public function index()
     {
-        //
-        try {
-            $pengumuman = Pengumuman::get();
-            $this->data = $pengumuman;
-            $this->status = "success";
-        } catch (QueryException $e) {
-            $this->status = "failed";
-            $this->error = $e;
-        }
-        return response()->json([
-            "status" => $this->status,
-            "data" => $this->data,
-            "error" => $this->error
-        ]);
+        return Pengumuman::when(request('search'), function ($query) {
+            $query->where('judul', 'like', '%' . request('search') . '%');
+        })->orderBy('id', 'desc')->paginate(5);
     }
+
     public function store(Request $request)
     {
         //

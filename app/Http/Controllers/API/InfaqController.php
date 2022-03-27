@@ -18,6 +18,11 @@ class InfaqController extends Controller
     *
     * @return void
     */
+
+   protected $status = null;
+   protected $error = null;
+   protected $data = null;
+
    public function __construct()
    {
       // Set midtrans configuration
@@ -43,6 +48,45 @@ class InfaqController extends Controller
          'message' => 'List Data Infaq : ' . auth()->guard('user-api')->user()->name,
          'data'    => $donations,
       ], 200);
+   }
+
+   public function GetAdmin()
+   {
+      //
+      try {
+         $infaq = DB::table('infaqs')->select(
+            'infaqs.invoice',
+            'infaqs.amount',
+            'infaqs.pray',
+            'infaqs.snap_token',
+            'infaqs.status',
+            'infaqs.updated_at',
+            'users.name'
+         )->join('users', 'users.id', '=', 'infaqs.user_id')->paginate(5);
+
+
+         $this->data = $infaq;
+         $this->status = "success";
+      } catch (QueryException $e) {
+         $this->status = "failed";
+         $this->error = $e;
+      }
+      return response()->json([
+         "status" => $this->status,
+         "data" =>  $this->data,
+         "error" => $this->error
+      ]);
+   }
+
+   public function SumInfaq()
+   {
+      //
+
+      return Infaq::where('status', 'success')->sum('amount');
+
+
+
+      // return response()->json($total);
    }
 
    /**
