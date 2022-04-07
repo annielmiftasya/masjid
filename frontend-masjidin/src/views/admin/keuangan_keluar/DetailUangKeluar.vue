@@ -63,9 +63,7 @@
         </div>
     </div>
 
-       <pagination align="center" :data="users" @pagination-change-page="list"></pagination>
-            
-
+    
 </div>
                         </div>
                         <!-- /.container-fluid -->

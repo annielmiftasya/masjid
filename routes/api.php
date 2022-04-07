@@ -48,6 +48,8 @@ Route::middleware('auth:admin-api')->get('currentAdmin', [AuthController::class,
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:admin']], function () {
 
    //Laporan Uang masuk
+
+   Route::get('/saldo', [LaporanKeuanganController::class, 'saldo']);
    Route::post('/uangmasuk', [LaporanKeuanganController::class, 'UangMasuk']);
 
    //laporan uang masuk
@@ -97,6 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin-api', 'scopes:ad
    //Infaq
    Route::get('/infaq', [InfaqController::class, 'GetAdmin']);
    Route::get('/infaq/total', [InfaqController::class, 'SumInfaq']);
+   Route::get('/infaq/cari', [InfaqController::class, 'search']);
 });
 
 
@@ -108,9 +111,31 @@ Route::group(['prefix' => 'user', 'middleware' => ['auth:user-api']], function (
 
    //profile
 
-   Route::post('/profil', [ProfileController::class, 'update']);
+   Route::post('/profile/{id}', [ProfileController::class, 'update']);
+   Route::get('/profile/{id}', [ProfileController::class, 'show']);
    Route::get('/profile', [ProfileController::class, 'index']);
-   Route::post('/profile/password', [ProfileController::class, 'updatePassword']);
+   Route::post('/profile/password/{id}', [ProfileController::class, 'updatePassword']);
 });
 
 Route::get('/pengajian/user', [PengajianController::class, 'index']);
+Route::get('/pengajian/user/{id}', [PengajianController::class, 'show']);
+
+Route::get('/pengumuman/user', [AdminPengumumanController::class, 'indexuser']);
+Route::get('/pengumuman/user/{id}', [AdminPengumumanController::class, 'show']);
+
+Route::get('/sholat1', [JadwalSholatController::class, 'index2']);
+Route::get('/sholat', [JadwalSholatController::class, 'index']);
+
+Route::get('/uang_keluar', [UangKeluarController::class, 'index']);
+Route::get('/uang_keluar/jumlah', [UangKeluarController::class, 'SumUangKeluar']);
+Route::get('/uang_keluar/detail/{id}', [UangKeluarController::class, 'showdata']);
+Route::get('/uang_keluar/cari', [UangKeluarController::class, 'search']);
+
+Route::get('/saldo', [LaporanKeuanganController::class, 'saldo']);
+Route::get('/saldo/uangmasuk', [LaporanKeuanganController::class, 'saldoUangmasuk']);
+
+Route::get('/infaq/total', [InfaqController::class, 'SumInfaq']);
+
+
+Route::get('/uang_masuk/jumlah', [UangMasukController::class, 'SumUangMasuk']);
+Route::get('/uang_masuk/cari', [UangMasukController::class, 'search']);

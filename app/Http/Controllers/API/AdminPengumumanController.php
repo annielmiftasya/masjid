@@ -23,6 +23,13 @@ class AdminPengumumanController extends Controller
         })->orderBy('id', 'desc')->paginate(5);
     }
 
+    public function indexuser()
+    {
+        return Pengumuman::when(request('search'), function ($query) {
+            $query->where('judul', 'like', '%' . request('search') . '%');
+        })->orderBy('id', 'desc')->paginate(6);
+    }
+
     public function store(Request $request)
     {
         //

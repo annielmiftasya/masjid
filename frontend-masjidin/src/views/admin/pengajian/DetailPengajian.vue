@@ -29,7 +29,7 @@
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4 p-3">
-                        <img    :src="path + '/pengajian/' + pengajian.foto " class="card-img" alt="foto">
+                        <img :src="path + '/pengajian/' + pengajian.foto " class="card-img" alt="foto">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

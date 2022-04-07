@@ -52,6 +52,9 @@
     //hook Toast
     import { useToast } from "vue-toastification"
 
+       //hook vue
+    import { onMounted } from 'vue'
+
   export default {
 
         components: {
@@ -66,9 +69,23 @@
 
             //route
             const route = useRoute()
-
+            
+            //state token
+            const token = localStorage.getItem('token')
+          
             //router
             const router = useRouter()
+
+            onMounted(() => {
+               
+                if(!token) {
+                    return router.push({
+                        name: 'login/user'
+                    })
+                }
+       
+             
+            })
 
             //toast
             const toast = useToast()
@@ -104,6 +121,7 @@
             }
 
             return {
+                token,
                 infaq,       // <-- state infaq
                 storeDonation   // <-- method storeDonation
             }

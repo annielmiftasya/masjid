@@ -17,7 +17,13 @@ class UangKeluarController extends Controller
     protected $error = null;
     protected $data = null;
 
-
+    public function search()
+    {
+        //
+        return Uangkeluar::when(request('search', 'search1'), function ($query) {
+            $query->whereBetween('date', [request('search'), request('search1')]);
+        })->orderBy('id', 'desc')->paginate(5);
+    }
     public function showdata($id)
     {
         //

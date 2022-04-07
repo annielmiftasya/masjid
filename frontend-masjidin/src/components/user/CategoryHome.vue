@@ -1,13 +1,13 @@
 <template>
     <div>
         <div>
-            <div class="mt- grid grid-cols-4  gap-4 md:gap-4 text-center items-center">
+            <div class="mt- grid grid-cols-3  gap-3 md:gap-3 text-center items-center">
                 <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
                     <!-- <router-link :to="{name: 'category.index'}"> -->
                     <div>
-                        <img src="@/assets/images/menu.png" width="40" class="inline-block mb-2">
+                        <img src="@/assets/images/pray.png" width="40" class="inline-block mb-2">
                     </div>
-                    Berita
+                    <a href="#pengajian">Pengajian</a>
                     <!-- </router-link> -->
                 </div>
                 <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
@@ -15,32 +15,41 @@
                     <div>
                         <img src="@/assets/images/menu.png" width="40" class="inline-block mb-2">
                     </div>
-                    Pengumuman
+                    <a href="#pengumuman"> Pengumuman</a>
+                   
                     <!-- </router-link> -->
                 </div>
                   <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
-                    <!-- <router-link :to="{name: 'category.index'}"> -->
+                    <router-link :to="{name: '/detail/jadwalsholat'}">
                     <div>
-                        <img src="@/assets/images/menu.png" width="40" class="inline-block mb-2">
+                        <img src="@/assets/images/quran.png" width="40" class="inline-block mb-2">
                     </div>
                     Jadwal Sholat
-                    <!-- </router-link> -->
+                    </router-link>
                 </div>
                   <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
-                    <!-- <router-link :to="{name: 'category.index'}"> -->
+                    <router-link :to="{name: '/donasi/tambah'}">
                     <div>
-                        <img src="@/assets/images/menu.png" width="40" class="inline-block mb-2">
+                        <img src="@/assets/images/infaq.png" width="40" class="inline-block mb-2">
                     </div>
                     Infaq
-                    <!-- </router-link> -->
+                    </router-link>
                 </div>
                   <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
-                    <!-- <router-link :to="{name: 'category.index'}"> -->
+                    <router-link :to="{name: '/detail/laporan'}">
                     <div>
-                        <img src="@/assets/images/menu.png" width="40" class="inline-block mb-2">
+                        <img src="@/assets/images/alms.png" width="40" class="inline-block mb-2">
                     </div>
                     Keuangan
-                    <!-- </router-link> -->
+                    </router-link>
+                </div>
+                 <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
+                    <router-link :to="{name: '/profil'}">
+                    <div>
+                        <img src="@/assets/images/user.png" width="40" class="inline-block mb-2">
+                    </div>
+                    Profil
+                    </router-link>
                 </div>
             </div>
         </div>

@@ -37,6 +37,30 @@ class InfaqController extends Controller
     *
     * @return void
     */
+
+
+   public function search()
+   {
+      //
+      return DB::table('infaqs')->select(
+         'infaqs.invoice',
+         'infaqs.amount',
+         'infaqs.pray',
+         'infaqs.snap_token',
+         'infaqs.status',
+         'infaqs.updated_at',
+         'users.name'
+      )
+         ->join('users', 'infaqs.user_id', '=', 'users.id')
+         ->when(request('search'), function ($query) {
+            $query->where('infaqs.updated_at', 'like', '%' . request('search') . '%');
+         })
+         ->paginate(5);
+
+      // return Infaq::when(request('search', 'search1'), function ($query) {
+      //    $query->whereBetween('updated_at', [request('search'), request('search1')]);
+      // })->where('user_id', auth()->guard('user-api')->user()->id)->latest()->orderBy('id', 'desc')->paginate(5);
+   }
    public function index()
    {
       //get data donations

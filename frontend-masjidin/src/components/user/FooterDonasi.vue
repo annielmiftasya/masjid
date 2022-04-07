@@ -36,8 +36,8 @@
                     <span class="tab tab-kategori block text-xs">Infaq</span>
                 </router-link>
                 </div>
-                    <!-- <router-link
-                        :to="{ name: '/profile' }"
+                    <router-link
+                        :to="{ name: '/profil' }"
                         class="w-full focus:text-teal-500 hover:text-teal-500 justify-center inline-block text-center"
                     >
                         <img
@@ -47,7 +47,7 @@
                             src="@/assets/images/user.png"
                         />
                         <span class="block text-xs">Akun</span>
-                    </router-link> -->
+                    </router-link>
                 </div>
                 
                

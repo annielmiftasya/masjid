@@ -1,5 +1,7 @@
 <template>
-    <div class="pb-20 pt-20">
+<div>
+    <Header/>
+<div class="pb-20 pt-36">
         <div class="container mx-auto grid grid-cols-1 p-5 sm:w-full md:w-5/12">
 
             <form @submit.prevent="login">
@@ -40,11 +42,17 @@
 
         </div>
     </div>
+</div>
+    
 </template>
 
 <script>
 import axios from 'axios'
+ import Header from '@/components/user/HeaderUser.vue'
 export default {
+      components: {
+            Header,
+        },
     data () {
       return {
           email: '',

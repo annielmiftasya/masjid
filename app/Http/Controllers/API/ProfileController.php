@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -17,13 +18,29 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function index()
+    protected $status = null;
+    protected $error = null;
+    protected $data = null;
+
+    public function show($id)
     {
-        //return with response JSON
+        //find by ID
+        $user = User::findOrfail($id);
+
+        //make response JSON
         return response()->json([
             'success' => true,
-            'message' => 'Data Profile',
-            'data'    => Auth::user(),
+            'message' => 'Detail Data',
+            'data'    => $user
+        ], 200);
+    }
+    public function index(Request $request)
+    {
+        $user = User::find($request->user());
+        return response()->json([
+            'success' => true,
+            'message' => 'List Data',
+            'data'    => $user
         ], 200);
     }
 
@@ -33,47 +50,54 @@ class ProfileController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //get data profile
-        $donatur = User::whereId(auth()->guard('user-api')->user()->id)->first();
-        $validator = Validator::make($request->all(), [
-            'name' => 'required'
-        ]);
+        // $donatur = User::whereId(auth()->guard('user-api')->user()->id)->first();
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required'
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 400);
+        // }
 
+        //find by ID
+        $donatur = User::find($id);
+        if ($donatur) {
+            //update with upload avatar
+            if ($request->file('avatar')) {
 
+                //hapus image lama
+                Storage::disk('local')->delete('public/users/' . basename($donatur->image));
 
-        //update with upload avatar
-        if ($request->file('avatar')) {
+                //upload image baru
+                $image = $request->file('avatar');
+                $image->storeAs('public/users', $image->hashName());
 
-            //hapus image lama
-            Storage::disk('local')->delete('public/users/' . basename($donatur->image));
+                $donatur->update([
+                    'name'      => $request->name,
+                    'avatar'    => $image->hashName()
+                ]);
+            }
 
-            //upload image baru
-            $image = $request->file('avatar');
-            $image->storeAs('public/users', $image->hashName());
-
+            //update without avatar
             $donatur->update([
                 'name'      => $request->name,
-                'avatar'    => $image->hashName()
             ]);
         }
-
-        //update without avatar
-        $donatur->update([
-            'name'      => $request->name,
-        ]);
-
-        //return with response JSON
+        try {
+            $this->data = $donatur;
+            $this->status = "success";
+        } catch (QueryException $e) {
+            $this->status = "failed";
+            $this->error = $e;
+        }
         return response()->json([
-            'success' => true,
-            'message' => 'Data Profile Berhasil Diupdate!',
-            'data'    => $donatur,
-        ], 201);
+            "status" => $this->status,
+            "hasil" => $this->data,
+            "data" => $this->error
+        ]);
     }
 
     /**
@@ -82,7 +106,7 @@ class ProfileController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'password' => 'required|confirmed'
@@ -92,7 +116,7 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $donatur = User::whereId(auth()->guard('user-api')->user()->id)->first();
+        $donatur = User::find($id);
         $donatur->update([
             'password'  => Hash::make($request->password)
         ]);
@@ -100,7 +124,7 @@ class ProfileController extends Controller
 
         //return with response JSON
         return response()->json([
-            'success' => true,
+            'status' => 'success',
             'message' => 'Password Berhasil Diupdate!',
             'data'    => $donatur,
         ], 201);

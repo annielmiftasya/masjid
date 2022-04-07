@@ -97,12 +97,24 @@
 
             //store vuex
             const store = useStore()
-
+            
+              //state token
+            const token = localStorage.getItem('token')
             //router
             const router = useRouter()
+            
+ 
 
+           
             //onMounted akan menjalankan action "getDonation" di module "donation"
             onMounted(() => {
+               
+                if(!token) {
+                    return router.push({
+                        name: 'login/user'
+                    })
+                }
+       
                 store.dispatch('infaq/getDonation')
             })
 
@@ -150,6 +162,7 @@
                 nextPage,       // <-- return nextPage
                 loadMore,       // <-- return loadMore
                 payment,        // <-- return payment Midtrans Snap
+                token,
             }
 
         }

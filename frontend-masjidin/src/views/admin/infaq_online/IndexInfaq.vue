@@ -27,28 +27,21 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-6 ml-0">
-                                            <form action="" method="post">
-                                                <div class="input-group mb-3">
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Masukkan keyword pencarian.."
-                                                        name="keyword"
-                                                    />
-                                                    <div
-                                                        class="input-group-append"
-                                                    >
-                                                        <button
-                                                            class="btn btn-outline-primary"
-                                                            type="submit"
-                                                            id="button-addon2"
-                                                        >
-                                                            Cari
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                         <div class="col-md-8 mb-4 ml-md-0 col-8 ml-3 ">
+                                    <form @submit.prevent="searchUang" method="get">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <input type="date" 
+                                            class="form-control"
+                                            name="search"
+                                            v-model="search"
+                                            required>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button class="btn btn-primary" type="submit">Cari</button>
+                                        </div>
+                                    </div>
+                                    </form>
                                         </div>
                                     </div>
                                     <div class="table-responsive">
@@ -161,6 +154,8 @@ export default {
         return {
           infaqs: {},
           total:{},
+            search:'',
+         
         }
       },
     mounted(){
@@ -224,6 +219,17 @@ export default {
             });
             
             
+        },
+         searchUang(){
+        const token = localStorage.getItem('token')
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`
+        var params = new URLSearchParams();
+        params.append("search", this.search);
+        var request = {
+        params: params
+        };
+        axios.get('http://localhost:8000/api/admin/infaq/cari',request)
+        .then(response =>  this.infaqs = response.data)
         },
        
             

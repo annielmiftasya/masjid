@@ -34,11 +34,11 @@
      </router-link>
      </div>
   <div class="-pt-6 md:px-20">
-    <a href="/one" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">BERANDA</a>
-    <a href="/one" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">INFAQ</a>
-    <a href="/two" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">PENGUMUMAN</a>
-    <a href="/two" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">KEUANGAN</a>
-    <a href="/three" class="md:text-sm text-xs no-underline text-white hover:text-blue-dark ml-10">PENGAJIAN</a>
+    <a href="/" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">BERANDA</a>
+    <a href="/donasi/tambah" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">INFAQ</a>
+    <a href="#pengumuman" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">PENGUMUMAN</a>
+    <a href="/detail/laporan" class="md:text-sm text-xs no-underline text-gray-100 hover:text-blue-dark ml-10">KEUANGAN</a>
+    <a href="#pengajian" class="md:text-sm text-xs no-underline text-white hover:text-blue-dark ml-10">PENGAJIAN</a>
    
 
   </div>

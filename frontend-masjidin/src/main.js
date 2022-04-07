@@ -9,6 +9,7 @@ import "vue-toastification/dist/index.css";
 // import LaravelVuePagination from 'laravel-vue-tailwind-pagination';
 
 
+
 /**
  * Tailwind CSS
  */

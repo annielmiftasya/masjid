@@ -31,67 +31,75 @@
           <CategoryHome />
             </div>
 
-       <!-- Pengumuman -->
-
-            <div class="md:mt-10 mt-6 md:px-20 px-5 mt-30 md:pt-20 md:mb-30 mb-5 bg-white">
+           <!-- Pengumuman -->
+          <section id="pengumuman">
+              <div class="md:mt-10 mt-6 md:px-20 px-5 mt-30 md:pt-20 md:mb-30 mb-5 bg-white">
             <div class="w-10 md:w-24 bg-ternary-blue opacity-60 h-6px mt-1 md:mb-5 mb-2"></div>
             <h6 class="md:text-40px text-base md:text-2xl font-bold font-montserrat text-secondary-blue">Pengumuman</h6>
             <div class="z-20 grid md:grid-cols-3 grid-cols-2 gap-6 mt-10">
-                <div class="rounded-xl border md:w-80 md:h-80 h-56">
-                    <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
-                    <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
-                    <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <!-- <template :cell(actions)="row">
-                        <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template> -->
-                </div>
-                  <div class="rounded-xl border md:w-80 md:h-80 h-56">
-                    <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
-                    <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
-                    <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <!-- <template :cell(actions)="row">
-                        <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template> -->
-                </div>
-                  <div class="rounded-xl border md:w-80 md:h-80 h-56">
-                    <img src="@/assets/images/alquran.jpg" alt="Berita" class="rounded-xl md:w-80 w-80 md:h-44 h-32 md:object-cover">
-                    <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">HAI SEMUA</p>
-                    <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat ab provident quisquam numquam, consectetur eaque inventore labore error voluptatem magni. Doloribus quaerat ad repellendus debitis delectus totam rerum nihil expedita?</p>
-                    <!-- <template :cell(actions)="row">
-                        <button variant="warning" class="text-xs border-2 md:px-2 px-1 md:py-2 py-1 rounded-3xl md:mx-4 mx-1 hover:bg-ternary-blue hover:text-white">Baca Selengkapnya</button>
-                    </template> -->
+                <div class="rounded-xl border md:w-80 md:h-96 h-80" v-for="(pengumuman) in pengumuman.data"  v-bind:key="pengumuman.id">
+                    <img  :src="path + '/pengumuman/' + pengumuman.foto" alt="Pengumuman"  class="rounded-xl md:w-90 w-80 md:h-60 h-32 md:object-cover">
+                    <p class="font-dm-sans font-medium md:text-xl text-sm text-six-blue md:py-3 py-2 md:px-4 px-2">{{pengumuman.judul}}</p>
+                     
+                    <p class="font-dm-sans font-medium md:text-base text-xs text-primary-black opacity-60 md:px-4 px-2 md:mb-4 mb-2">{{pengumuman.tanggal}}</p>
+                     <router-link :to="{name: 'detail/pengumuman', params: {id: pengumuman.id }}" class="border-2 px-2 py-2 rounded-2xl mt-3 ml-2 bg-white">
+                        Baca Selengkapnya
+                    </router-link>
                 </div>
             </div>
-            
+                <VueTailwindPagination
+      :current="currentPage1"
+      :total="total"
+      :per-page="perPage"
+      @page-changed="onPageClick1($event)" class="mt-5"
+    />
             </div>
+          </section>
+          
 
-            <!-- Berita -->
+            <!-- Pengajian -->
+            <section id="pengajian">
             <div class="md:mt-36 mt-20 pt-20 md:px-20 pb-20 px-5 mt-10 -z-30 md:mb-40 mb-10 bg-indigo-50">
             <div class="w-10 md:w-24 bg-ternary-blue opacity-60 h-6px mt-5 md:mb-5 mb-2"></div>
             <h6 class="md:text-40px text-base md:text-2xl font-bold font-montserrat text-secondary-blue">Pengajian</h6>
 
-            <div class=" md:mt-10">
+            <div class="md:block hidden md:mt-10">
               <div class="flex flex-row items-center mt-5"   
-              v-for="(pengajian) in pengajian.data" :key="pengajian.id" >
+              v-for="(pengajian) in pengajian.data"  v-bind:key="pengajian.id">
               
                 <div class="mt-5">
                   <img :src="path + '/Pengajian/' + pengajian.foto" alt="Pengumuman" style="width:400px; height:250px">
                 </div>
                   <div class="md:mt-0 mt-5 md:w-2/4 w-full ml-10">
                       <h6 class="font-dm-sans font-medium text-xl text-six-blue">{{pengajian.judul}}</h6>
+                      <p class="mt-3 pb-5 text-sm">{{pengajian.tanggal}}</p>
+                        <router-link :to="{name: 'detail/pengajian', params: {id: pengajian.id }}" class="border-2 px-2 py-2 rounded-2xl mt-10 bg-white">
+                        Baca Selengkapnya
+                        </router-link>
                     <div>
-                      <template>
-                          <button class="border-2 px-2 py-2 rounded-2xl">Baca Selengkapnya</button>
-                      </template>
+                      
+                   
                     </div>
                   </div>
               </div>
-              
+                 <VueTailwindPagination
+      :current="currentPage"
+      :total="total"
+      :per-page="perPage"
+      @page-changed="onPageClick($event)" class="mt-5"
+    />
+               
+              <!-- <LaravelVuePagination :data="pengajian" @pagination-change-page="getResult"  /> -->
+              <div class="mt-5">
+
+  </div>
                                       
             </div>
-             <Pagination :data="pengajian" @pagination-change-page="getResult" />
+             
 
         </div>
+            </section>
+          
 
         
 
@@ -131,9 +139,9 @@
     import Header from '@/components/user/HeaderUser.vue'
     import Footer from '@/components/user/FooterUser.vue'
     import axios from "axios";
-    import { onMounted} from "@vue/runtime-core";
-    import { useRouter} from "vue-router";
-    import LaravelVuePagination from 'laravel-vue-pagination';
+ 
+  // import "@ocrv/vue-tailwind-pagination/dist/style.css";
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
     
 
@@ -144,93 +152,70 @@
             Footer,
             Slider,     
             CategoryHome, 
-             'Pagination': LaravelVuePagination,  
+            VueTailwindPagination,
            
         },
          data() {
         return {
           path: "http://localhost:8000",
-          pengajian: {},
+           currentPage: 0,
+           currentPage1: 0,
+           perPage: 0,
+           total: 0,
+           pengajian: {},
+           pengumuman:{},
+          
         }
       },
     mounted(){
-        this.getResult();
+        // this.getResult();
+        this.currentPage = 1;
+        this.getData(this.currentPage);
+
+        this.currentPage1 = 1;
+        this.getData1(this.currentPage1);
     },
 
-        setup() {
-             //state token
-            const token = localStorage.getItem('token')
-
-            //inisialisasi vue router on Composition API
-            const router = useRouter()
-
-            //state user
-            // const infaq = ref("");
-
-               //state user
-            // const total = ref("");
-
-
-        
-        //mounted
-        onMounted(() => {
-            //check Token exist
-                if(!token) {
-                    return router.push({
-                        name: 'login'
-                    })
-                }
-        
-
-        });
-        //return
-        return {
-          token,
-        };
-      },
+     
     
    methods:{
-        getResult(page = 1) {
-         //get API from laravel backend
-          axios
-            .get('http://localhost:8000/api/pengajian/user?page=' + page)
-            .then((response) => {
-              this.pengajian= response.data;
-            })
-            .catch((error) => {
-              console.log(error.response.data);
-              // this.$router.push({ name: 'login'});
-            });
-            
-            
-            
-        },
+        
+
+      onPageClick(event) {
+      this.currentPage = event;
+      this.getData(this.currentPage);
+    },
+        onPageClick1(event) {
+      this.currentPage1 = event;
+      this.getData1(this.currentPage1);
+    },
+    async getData(pageNumber) {
+      var response = await axios.get(
+        `http://localhost:8000/api/pengajian/user?page=${pageNumber}`
+      );
+      var responseData = response.data;
+      this.currentPage = responseData.page;
+      this.perPage = responseData.per_page;
+      this.total = responseData.total;
+      this.pengajian = response.data;
+    },
+     async getData1(pageNumber) {
+      var response = await axios.get(
+        `http://localhost:8000/api/pengumuman/user?page=${pageNumber}`
+      );
+      var responseData = response.data;
+      this.currentPage1 = responseData.page;
+      this.perPage = responseData.per_page;
+      this.total = responseData.total;
+      this.pengumuman = response.data;
+    },
         
        
             
    },
 
 };
-        // setup() {
-
-        //     //store vuex
-        //     const store = useStore()
-
-        //     //onMounted akan menjalankan action "getCampaign" di module "campaign"
-        //     onMounted(() => {
-        //         store.dispatch('campaign/getCampaign')
-        //     })
-
-        //     //digunakan untuk get data  state "campaigns" di module "campaign" 
-        //     const campaigns = computed(() => {
-        //         return store.state.campaign.campaigns
-        //     })
-
-        //     return {
-        //         campaigns,      // <-- return campaigns
-        //     }
-
-        // }
+     
 
     
 </script>   

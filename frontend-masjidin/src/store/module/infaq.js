@@ -120,6 +120,11 @@ const infaq = {
 
         //storeDonation
         storeDonation({ commit }, data) {
+               //get data token dan user
+               const token = localStorage.getItem("token");
+
+               //set axios header dengan type Authorization + Bearer token
+               Api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             //define callback promise
             return new Promise((resolve, reject) => {
                 //get data token dan user

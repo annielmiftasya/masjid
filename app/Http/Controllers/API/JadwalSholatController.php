@@ -28,6 +28,12 @@ class JadwalSholatController extends Controller
         //
         return JadwalSholat::orderBy('id', 'desc')->paginate(5);
     }
+
+    public function index2()
+    {
+        //
+        return JadwalSholat::orderBy('id', 'desc')->paginate(15);
+    }
     public function store(Request $request)
     {
         //

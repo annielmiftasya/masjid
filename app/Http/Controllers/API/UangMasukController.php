@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
+
 class UangMasukController extends Controller
 {
     //
@@ -17,6 +18,14 @@ class UangMasukController extends Controller
     protected $error = null;
     protected $data = null;
 
+
+    public function search()
+    {
+        //
+        return Uangmasuk::when(request('search', 'search1'), function ($query) {
+            $query->whereBetween('date', [request('search'), request('search1')]);
+        })->orderBy('id', 'desc')->paginate(5);
+    }
 
     public function showdata($id)
     {
