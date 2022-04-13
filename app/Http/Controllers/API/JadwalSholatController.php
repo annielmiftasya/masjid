@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\JadwalSholat;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
 class JadwalSholatController extends Controller
@@ -15,6 +16,26 @@ class JadwalSholatController extends Controller
     protected $error = null;
     protected $data = null;
 
+    public function coba()
+    {
+        $month = Carbon::now()->month;
+        // return response()->json($month);
+
+        $year = Carbon::now()->year;
+
+        // $response = Http::get(' https: //api.myquran.com/v1/sholat/jadwal/1632/2022/04')->json();
+        $response = Http::get('https://api.myquran.com/v1/sholat/jadwal/1632/' . $year . '/' . $month . '/')->json();
+        return response()->json($response);
+    }
+    public function coba1()
+    {
+        $posts = JadwalSholat::get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Posts',
+            'data' => $posts
+        ], 200);
+    }
     public function index()
     {
         //

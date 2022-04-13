@@ -20,7 +20,7 @@
                     <!-- </router-link> -->
                 </div>
                   <div class="col-span-2 md:col-span-1 lg:col-span-1 bg-white rounded-md shadow-md p-4 text-center text-xs">
-                    <router-link :to="{name: '/detail/jadwalsholat'}">
+                    <router-link :to="{name: '/detail/sholat'}">
                     <div>
                         <img src="@/assets/images/quran.png" width="40" class="inline-block mb-2">
                     </div>

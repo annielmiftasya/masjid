@@ -125,6 +125,8 @@ Route::get('/pengumuman/user/{id}', [AdminPengumumanController::class, 'show']);
 
 Route::get('/sholat1', [JadwalSholatController::class, 'index2']);
 Route::get('/sholat', [JadwalSholatController::class, 'index']);
+Route::get('/sholat3', [JadwalSholatController::class, 'coba']);
+Route::get('/sholat4', [JadwalSholatController::class, 'coba1']);
 
 Route::get('/uang_keluar', [UangKeluarController::class, 'index']);
 Route::get('/uang_keluar/jumlah', [UangKeluarController::class, 'SumUangKeluar']);

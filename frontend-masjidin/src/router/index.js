@@ -170,6 +170,11 @@ const routes = [
     component: () => import( /* webpackChunkName: "detail/jadwalsholat" */ '@/views/user/detail/DetailJadwal.vue')
   },
   {
+    name: '/detail/sholat',
+    path: '/detail/sholat',
+    component: () => import( /* webpackChunkName: "detail/sholat" */ '@/views/user/detail/DetailSholat.vue')
+  },
+  {
     name: '/detail/laporan',
     path: '/detail/laporan',
     component: () => import( /* webpackChunkName: "detail/laporan" */ '@/views/user/detail/DetailLaporan.vue')
