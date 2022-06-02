@@ -244,10 +244,10 @@ export default {
         },
           
 
-        Delete(id, index) {
+        Delete(id) {
           axios.delete(`http://localhost:8000/api/admin/uang_masuk/${id}`).then(() => {
-            this.uang_masuk.splice(index, 1);
-            alert('delete data?')
+            this.getResult();
+            alert('Apakah anda yakin ingin menghapus data ini?')
           }).catch(error => {
             console.log(error.response.data)
           })

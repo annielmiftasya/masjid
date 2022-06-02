@@ -38,7 +38,18 @@ class AuthController extends Controller
         $success['token'] =  $user->createToken('nApp')->accessToken;
         $success['name'] =  $user;
 
-        return response()->json(['success' => $success]);
+        try {
+            $this->data = $success;
+            $this->status = "success";
+        } catch (QueryException $e) {
+            $this->status = "failed";
+            $this->error = $e;
+        }
+        return response()->json([
+            "status" => $this->status,
+            "hasil" => $this->data,
+            "data" => $this->error
+        ]);;
     }
 
     public function registerAdmin(Request $request)

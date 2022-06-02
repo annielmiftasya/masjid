@@ -31,7 +31,7 @@ Route::post('admin/login', [AuthController::class, 'adminLogin'])->name('adminLo
 
 //user
 Route::post('user/register', [AuthController::class, 'registerUser']);
-Route::post('user/login', [AuthController::class, 'adminLogin'])->name('adminLogin');
+Route::post('user/login', [AuthController::class, 'userLogin'])->name('userLogin');
 
 
 // Route::get('/infaq', [InfaqController::class, 'index'])->middleware('auth:user-api');
@@ -137,7 +137,5 @@ Route::get('/saldo', [LaporanKeuanganController::class, 'saldo']);
 Route::get('/saldo/uangmasuk', [LaporanKeuanganController::class, 'saldoUangmasuk']);
 
 Route::get('/infaq/total', [InfaqController::class, 'SumInfaq']);
-
-
 Route::get('/uang_masuk/jumlah', [UangMasukController::class, 'SumUangMasuk']);
 Route::get('/uang_masuk/cari', [UangMasukController::class, 'search']);

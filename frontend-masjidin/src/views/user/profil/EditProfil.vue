@@ -129,12 +129,12 @@
                  console.log(response.data.status)
                  if (response.data.status === 'success') {
                  this.$router.push({name: '/profil'});  
-                 alert('Data Pengumuman Berhasil Disimpan!');
+                 alert('Data Profil Berhasil Dirubah!');
                  } 
                  
                  else {
                         console.error('fail')
-                          alert('Data Pengumuman Gagal Disimpan!');
+                          alert('Data Profil Gagal Disimpan!');
                  }
             })
         },

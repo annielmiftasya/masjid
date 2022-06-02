@@ -1,7 +1,5 @@
 module.exports = {
-  purge: [
-    './src/**/*.vue',
-  ],
+  purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -10,4 +8,8 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+//   variants: {
+//     opacity: ['disabled'],
+//     cursor: ['disabled'],
+// },
 }

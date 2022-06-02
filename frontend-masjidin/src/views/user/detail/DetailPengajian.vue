@@ -9,8 +9,18 @@
                  <img :src="path + '/pengajian/' + pengajian.foto " class="pt-10" alt="pengajian">
                   <p class="font-dm-sans font-bold text-sm pt-5 text-gray-300 uppercase">Dibuat : {{pengajian.tanggal}}</p>
                  <p class="font-dm-sans font-normal text-gray-400 text-base mt-7" v-html="pengajian.deskripsi"></p>
-            </div>
+ <!-- <iframe :src="'https://www.youtube.com/embed/4S3nWaeljFw'" class="z-0 mx-auto md:ml-10 w-44 h-36 md:w-full md:h-96 md:pt-0 pt-5 md:-mt-10"> </iframe>
+  -->
+                   <!-- <div class="bg-blue-opacity"  style="z-index: -10;" >
+            <img class="absolute right-0 w-full h-72 md:h-full md:-mt-16 -mt-24" style="z-index: -10;" 
+            src="" alt="bg-video">
+          </div> -->
+          <!-- <div class="flex flex-col md:flex-row md:py-20 py-5 -mt-12 ">
+            <p class="font-inter text-white font-bold text-lg text-center md:text-left md:text-4xl z-0 w-full md:w-2/4 -mt-10 md:pt-16">Kenal Lebih Dekat dengan Sekolah Dasar Islam Terpadu Al-Huda</p>
+               </div> -->
 
+            </div>
+     
            
         </div>
 

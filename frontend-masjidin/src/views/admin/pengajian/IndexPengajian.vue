@@ -216,9 +216,9 @@ export default {
                     this.pengajian = response.data;
                 });
         },
-        Delete(id, index) {
+        Delete(id) {
           axios.delete(`http://localhost:8000/api/admin/pengajian/${id}`).then(() => {
-         this.pengajian.splice(index, 1);
+         this.getResult();
             alert('Apakah anda yakin ingin menghapus data ini?')
           }).catch(error => {
             console.log(error.response.data)

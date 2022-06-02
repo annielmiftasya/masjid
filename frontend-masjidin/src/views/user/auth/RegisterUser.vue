@@ -66,7 +66,7 @@
                 <div class="text-center mt-5">
                     Sudah punya akun ?
                     <router-link
-                        :to="{ name: '/login/user' }"
+                        :to="{ name: 'login/user' }"
                         class="underline text-blue-600"
                         >Masuk Disini !</router-link
                     >
@@ -97,14 +97,18 @@ export default {
                   password: this.password,
                   password_confirmation: this.password_confirmation
                 })
-                .then(()=> { 
-                  this.$router.push({ name: '/login/user'});
-                  alert('Berhasil Daftar Akun!');
-                })
-               .catch(error => { 
-                  console.log(error)
-                  alert('Gagal Daftar Akun!');
-                });
+               .then((response)=> {
+                console.log(response.data)
+                 console.log(response.data.status)
+                 if (response.data.status === 'success') {
+                 this.$router.push({name: 'login/user'});  
+                 alert('Register Berhasil!');
+                 } 
+                 else{
+                        console.error('fail')
+                          alert('Register Gagal!');
+                 }
+            })
           }
       
     }

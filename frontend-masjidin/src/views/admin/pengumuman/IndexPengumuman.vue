@@ -212,9 +212,9 @@ export default {
                     this.pengumuman = response.data;
                 });
         },
-        Delete(id, index) {
+        Delete(id) {
           axios.delete(`http://localhost:8000/api/admin/pengumuman/${id}`).then(() => {
-         this.pengumuman.splice(index, 1);
+         this.getResult();
             alert('Apakah anda yakin ingin menghapus data ini?')
           }).catch(error => {
             console.log(error.response.data)
